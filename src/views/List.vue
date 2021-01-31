@@ -3,6 +3,7 @@
     <h1 class="list-name">{{ list.name }}</h1>
     <new-item-form :parent-index="$route.params.index"/>
     <button @click="deleteCheckedItems" class="remove-checked">Remove All Checked Items</button>
+    <button @click="filterItems('alpha')" class="filter-button">A-Z</button>
     <div v-if="list.items.length" class="list-items">
       <div v-for="(item, index) in list.items" :key="index" class="list-item" :class="{'obtained': item.checked}">
         <button class="list-item__check" @click="toggleCheckedState(index)">
@@ -47,6 +48,17 @@ export default {
       const list = this.$store.state.lists[this.$route.params.index];
       list.items[index].checked = !list.items[index].checked;
       this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+    },
+    filterItems(type) {
+      if (type === 'alpha') {
+        const list = this.$store.state.lists[this.$route.params.index];
+        list.items.sort((a, b) => {
+          if (a.name < b.name) return -1
+          if (a.name > b.name) return 1
+          return 0;
+        })
+        this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+      }
     }
   }
 }
@@ -83,5 +95,9 @@ export default {
 
 .remove-checked {
   @apply text-xs bg-red-800 p-2 rounded shadow-md mb-4 border border-red-700 font-light leading-none;
+}
+
+.filter-button {
+  @apply text-xs bg-yellow-800 p-2 rounded shadow-md mb-4 ml-4 border border-yellow-700 font-light leading-none;
 }
 </style>
