@@ -1,5 +1,5 @@
 export default class Item {
-    constructor(name: string, quantity: number, cost: number, checked: boolean, url: string) {
+    constructor(name, quantity, cost, checked, url) {
         this.name = name;
         this.quantity = quantity;
         this.cost = cost;
