@@ -2,6 +2,7 @@
   <div>
     <h1 class="list-name">{{ list.name }}</h1>
     <new-item-form :parent-index="$route.params.index"/>
+    <button @click="deleteCheckedItems" class="remove-checked">Remove All Checked Items</button>
     <div v-if="list.items.length" class="list-items">
       <div v-for="(item, index) in list.items" :key="index" class="list-item" :class="{'obtained': item.checked}">
         <button class="list-item__check" @click="toggleCheckedState(index)">
@@ -10,7 +11,7 @@
         </button>
         <div class="list-item__quantity">{{ item.quantity }}</div>
         <div class="list-item__name">{{ item.name }}</div>
-        <button @click="deleteItem(index)" class="list-link__delete">
+        <button @click="deleteItem(index, item.name)" class="list-link__delete">
           <font-awesome-icon icon="times-circle"/>
         </button>
       </div>
@@ -30,13 +31,20 @@ export default {
     }
   },
   methods: {
-    deleteItem(index) {
-      let list = this.$store.state.lists[this.$route.params.index];
-      list.items.splice(index, 1)
+    deleteCheckedItems() {
+      const list = this.$store.state.lists[this.$route.params.index];
+      list.items = list.items.filter(item => !item.checked)
       this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
     },
+    deleteItem(index, name) {
+      if (confirm('Are you sure you want to remove ' + name + ' from this list?')) {
+        const list = this.$store.state.lists[this.$route.params.index];
+        list.items.splice(index, 1)
+        this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+      }
+    },
     toggleCheckedState(index) {
-      let list = this.$store.state.lists[this.$route.params.index];
+      const list = this.$store.state.lists[this.$route.params.index];
       list.items[index].checked = !list.items[index].checked;
       this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
     }
@@ -61,7 +69,7 @@ export default {
   }
 
   &__quantity {
-    @apply w-16 text-center border-r border-green-700 py-2 px-4;
+    @apply w-16 h-full flex justify-center items-center border-r border-l ml-3 border-green-700 py-2 px-4;
   }
 
   &__name {
@@ -71,5 +79,9 @@ export default {
   &__check {
     @apply flex justify-center items-center text-2xl ml-3;
   }
+}
+
+.remove-checked {
+  @apply text-xs bg-red-800 p-2 rounded shadow-md mb-4 border border-red-700 font-light leading-none;
 }
 </style>

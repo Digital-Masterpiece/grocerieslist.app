@@ -15,6 +15,7 @@ export default createStore({
     },
     mutations: {
         initListFromLocalStorage(state) {
+            // localStorage.setItem('lists', state.lists)
             state.lists = JSON.parse(localStorage.getItem('lists'));
         },
         mutateList(state, payload) {
@@ -36,7 +37,7 @@ export default createStore({
                 setTimeout(() => {
                     context.commit('mutateList', {index: null, list: list})
                     resolve()
-                }, 100)
+                }, 1)
             })
         },
         updateList(context, {index, list}) {
@@ -44,7 +45,7 @@ export default createStore({
                 setTimeout(() => {
                     context.commit('mutateList', {index: index, list: list})
                     resolve()
-                }, 100)
+                }, 1)
             })
         },
         deleteList(context, index) {
@@ -52,7 +53,7 @@ export default createStore({
                 setTimeout(() => {
                     context.commit('removeList', index)
                     resolve()
-                }, 100)
+                }, 1)
             })
         }
     },
