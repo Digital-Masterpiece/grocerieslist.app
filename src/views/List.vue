@@ -10,8 +10,12 @@
           <font-awesome-icon v-if="item.checked" icon="check-square"/>
           <font-awesome-icon v-else icon="square"/>
         </button>
-        <div class="list-item__quantity">{{ item.quantity }}</div>
-        <div class="list-item__name">{{ item.name }}</div>
+        <div class="list-item__quantity" @blur="modifyItemQuantity($event, index)" contenteditable>
+          {{ item.quantity }}
+        </div>
+        <div class="list-item__name" @blur="modifyItemName($event, index)" contenteditable>
+          {{ item.name }}
+        </div>
         <button @click="deleteItem(index, item.name)" class="list-link__delete">
           <font-awesome-icon icon="times-circle"/>
         </button>
@@ -43,6 +47,20 @@ export default {
         list.items.splice(index, 1)
         this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
       }
+    },
+    modifyItemQuantity(event, index) {
+      const list = this.$store.state.lists[this.$route.params.index];
+      if (!isNaN(event.target.innerText)) {
+        list.items[index].quantity = event.target.innerText
+        this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+      } else {
+        event.target.innerText = list.items[index].quantity
+      }
+    },
+    modifyItemName(event, index) {
+      const list = this.$store.state.lists[this.$route.params.index];
+      list.items[index].name = event.target.innerText
+      this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
     },
     toggleCheckedState(index) {
       const list = this.$store.state.lists[this.$route.params.index];
@@ -85,7 +103,7 @@ export default {
   }
 
   &__name {
-    @apply py-2 px-4;
+    @apply py-2 px-4 w-full;
   }
 
   &__check {
