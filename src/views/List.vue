@@ -2,8 +2,8 @@
   <div>
     <h1 class="list-name">{{ list.name }}</h1>
     <new-item-form :parent-index="$route.params.index"/>
-    <button @click="deleteCheckedItems" class="remove-checked">Remove All Checked Items</button>
-    <button @click="filterItems('alpha')" class="filter-button">A-Z</button>
+    <button @click="deleteCheckedItems" class="remove-checked" title="Remove All Checked Items">Remove Checked</button>
+    <button @click="filterItems('alpha')" class="filter-button" title="Filter Alphanumerically">A-Z</button>
     <div v-if="list.items.length" class="list-items">
       <div v-for="(item, index) in list.items" :key="index" class="list-item" :class="{'obtained': item.checked}">
         <button class="list-item__check" @click="toggleCheckedState(index)">

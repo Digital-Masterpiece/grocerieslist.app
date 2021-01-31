@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Create a new List</h2>
+    <h1 class="new-list-header">New List</h1>
     <new-list-form />
   </div>
 </template>
@@ -11,3 +11,9 @@ export default {
   components: {NewListForm}
 }
 </script>
+
+<style lang="scss">
+.new-list-header {
+  @apply text-2xl font-medium text-center mb-2;
+}
+</style>
