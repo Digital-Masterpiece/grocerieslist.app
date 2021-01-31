@@ -6,7 +6,7 @@
     </div>
     <div class="new-item-form__field new-item-form__field--quantity">
       <label for="item_quantity" class="sr-only">Item Name</label>
-      <input type="number" id="item_quantity" v-model="quantity" class="new-item-form__field__input" required>
+      <input type="number" id="item_quantity" v-model="quantity" class="new-item-form__field__input" min="1" max="999" required>
     </div>
     <button type="submit" class="new-item-form__submit">
       <font-awesome-icon icon="plus-circle"/>
