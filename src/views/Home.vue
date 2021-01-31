@@ -24,9 +24,7 @@ export default {
   methods: {
     deleteList(index) {
       if (confirm('Are you sure you want to delete ' + this.$store.state.lists[0].name + '?')) {
-        this.$store.dispatch('deleteList', index).then(() => {
-          console.log(this.$store.state.lists)
-        })
+        this.$store.dispatch('deleteList', index)
       }
     }
   },

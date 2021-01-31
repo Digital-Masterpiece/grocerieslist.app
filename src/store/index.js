@@ -14,6 +14,9 @@ export default createStore({
         }
     },
     mutations: {
+        initListFromLocalStorage(state) {
+            state.lists = JSON.parse(localStorage.getItem('lists'));
+        },
         mutateList(state, payload) {
             if (payload.index !== null) {
                 state.lists[payload.index] = payload.list
@@ -21,15 +24,10 @@ export default createStore({
                 state.lists.push(payload.list)
             }
             localStorage.setItem('lists', JSON.stringify(state.lists))
-            console.log(localStorage.getItem('lists'))
         },
         removeList(state, index) {
             state.lists.splice(index, 1)
             localStorage.setItem('lists', JSON.stringify(state.lists))
-            console.log(localStorage.getItem('lists'))
-        },
-        initListFromLocalStorage(state) {
-            state.lists = JSON.parse(localStorage.getItem('lists'));
         }
     },
     actions: {
@@ -42,7 +40,12 @@ export default createStore({
             })
         },
         updateList(context, {index, list}) {
-            context.commit('mutateList', {index: index, list: list})
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    context.commit('mutateList', {index: index, list: list})
+                    resolve()
+                }, 100)
+            })
         },
         deleteList(context, index) {
             return new Promise(resolve => {

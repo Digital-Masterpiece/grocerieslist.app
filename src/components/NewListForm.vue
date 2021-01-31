@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     createList() {
-      console.log(this.name);
       this.$store.dispatch('createList',
           new List(this.name, [])
       ).then(() => {
