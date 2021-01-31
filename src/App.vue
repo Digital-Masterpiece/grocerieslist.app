@@ -20,6 +20,6 @@ html {
   @apply bg-green-900 text-white font-light;
 }
 .main {
-  @apply p-6;
+  @apply p-6 w-full max-w-lg mx-auto;
 }
 </style>

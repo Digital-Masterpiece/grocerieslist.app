@@ -20,6 +20,9 @@ export default createStore({
             } else {
                 state.lists.push(payload.list)
             }
+        },
+        removeList(state, index) {
+            state.lists.splice(index, 1)
         }
     },
     actions: {
@@ -33,6 +36,14 @@ export default createStore({
         },
         updateList(context, {index, list}) {
             context.commit('mutateList', {index: index, list: list})
+        },
+        deleteList(context, index) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    context.commit('removeList', index)
+                    resolve()
+                }, 100)
+            })
         }
     },
     modules: {}

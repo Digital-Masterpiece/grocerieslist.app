@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="createList(name)">
     <label for="name">List Name</label>
-    <input type="text" id="name" v-model="name" class="text-black">
+    <input type="text" id="name" v-model="name" class="text-black" required>
     <button type="submit">Create</button>
   </form>
 </template>
