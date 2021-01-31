@@ -1,13 +1,25 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link>
+  <div>
+    <app-header/>
+    <main class="main" id="main">
+      <router-view/>
+    </main>
   </div>
-  <router-view/>
 </template>
+
+<script>
+import AppHeader from "@/components/AppHeader";
+export default {
+  components: {AppHeader}
+}
+</script>
 
 <style lang="scss">
 html {
   font-family: 'Inter', sans-serif;
   @apply bg-green-900 text-white font-light;
+}
+.main {
+  @apply p-6;
 }
 </style>

@@ -1,19 +1,20 @@
 <template>
   <div>
-    <h1>Welcome!</h1>
-    <p>Create a new list to get started!</p>
-    <new-list-form />
+    <h1 class="sr-only">Welcome!</h1>
+    <p v-if="lists.length === 0">Create a new list to get started!</p>
+    <div v-else>
+      <router-link v-for="(list, index) in lists" :key="index" :to="{name: 'List', params: {index: index}}">
+        <div>{{ list.name }}</div>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
-import NewListForm from "@/components/NewListForm";
+import { mapState } from 'vuex'
 export default {
-  components: {NewListForm},
-  data() {
-    return {
-
-    }
-  }
+  computed: mapState({
+    lists: state => state.lists
+  })
 }
 </script>

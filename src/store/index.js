@@ -4,6 +4,15 @@ export default createStore({
     state: {
         lists: []
     },
+    getters: {
+        getList(state, index) {
+            if (state.lists[index]) {
+                return state.lists[index]
+            } else {
+                return null;
+            }
+        }
+    },
     mutations: {
         mutateList(state, payload) {
             if (payload.index !== null) {
@@ -19,7 +28,7 @@ export default createStore({
                 setTimeout(() => {
                     context.commit('mutateList', {index: null, list: list})
                     resolve()
-                }, 500)
+                }, 100)
             })
         },
         updateList(context, {index, list}) {
