@@ -13,7 +13,7 @@
 
 <style lang="scss">
 .header {
-  @apply flex justify-center items-center p-6 text-xl border-b border-green-700;
+  @apply flex justify-center items-center p-6 text-xl bg-gray-800 border-b border-gray-600;
 
   &__link {
     @apply flex justify-center items-center;

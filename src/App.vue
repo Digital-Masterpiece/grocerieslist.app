@@ -20,7 +20,7 @@ export default {
 <style lang="scss">
 html {
   font-family: 'Inter', sans-serif;
-  @apply bg-green-900 text-white font-light;
+  @apply bg-gray-900 text-white font-light;
 }
 .main {
   @apply p-6 w-full max-w-lg mx-auto;
