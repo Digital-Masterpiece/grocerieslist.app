@@ -20,9 +20,16 @@ export default createStore({
             } else {
                 state.lists.push(payload.list)
             }
+            localStorage.setItem('lists', JSON.stringify(state.lists))
+            console.log(localStorage.getItem('lists'))
         },
         removeList(state, index) {
             state.lists.splice(index, 1)
+            localStorage.setItem('lists', JSON.stringify(state.lists))
+            console.log(localStorage.getItem('lists'))
+        },
+        initListFromLocalStorage(state) {
+            state.lists = JSON.parse(localStorage.getItem('lists'));
         }
     },
     actions: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ list.name }}</h1>
+    <h1 class="list-name">{{ list.name }}</h1>
   </div>
 </template>
 
@@ -13,3 +13,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.list-name {
+  @apply text-xl font-normal;
+}
+</style>
