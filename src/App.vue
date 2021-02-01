@@ -28,8 +28,8 @@ html {
   @apply bg-gray-900 text-white font-light;
 }
 
-html, body, #app {
-  @apply h-full;
+html, body, #app, .app {
+  @apply min-h-screen;
 }
 
 .app {
