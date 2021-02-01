@@ -28,7 +28,7 @@ html {
   @apply bg-gray-900 text-white font-light;
 }
 
-html, body, #app, .app {
+html, body, #app {
   @apply h-full;
 }
 
@@ -41,7 +41,7 @@ html, body, #app, .app {
 }
 
 .footer {
-  @apply p-6 w-full max-w-lg mx-auto text-xs text-center;
+  @apply p-6 w-full max-w-lg mx-auto text-xs text-center flex-shrink-0;
 }
 
 .dm-link {
