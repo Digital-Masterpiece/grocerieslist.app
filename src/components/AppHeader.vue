@@ -15,7 +15,7 @@
 
 <style lang="scss">
 .header {
-  @apply flex justify-center items-center p-6 text-xl bg-gray-800 border-b border-gray-600;
+  @apply flex justify-center items-center p-6 text-xl w-full bg-gray-800 border-b border-gray-600;
 
   &__nav {
     @apply flex justify-between items-center w-full max-w-lg;
