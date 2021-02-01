@@ -28,10 +28,6 @@ html {
   @apply bg-gray-900 text-white font-light;
 }
 
-html, body, #app, .app {
-  @apply min-h-screen;
-}
-
 .app {
   @apply flex flex-col justify-center items-center w-full;
 }
