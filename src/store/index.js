@@ -15,7 +15,7 @@ export default createStore({
     },
     mutations: {
         initListFromLocalStorage(state) {
-            if (localStorage.setItem('lists', state.lists)) {
+            if (localStorage.getItem('lists', state.lists)) {
                 state.lists = JSON.parse(localStorage.getItem('lists'));
             }
         },

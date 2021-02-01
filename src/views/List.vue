@@ -10,10 +10,17 @@
           <font-awesome-icon v-if="item.checked" icon="check-square"/>
           <font-awesome-icon v-else icon="square"/>
         </button>
-        <div class="list-item__quantity" @blur="modifyItemQuantity($event, index)" contenteditable>
+        <div class="list-item__quantity"
+             @blur="modifyItemQuantity($event, index)"
+             @keypress.enter="modifyItemQuantity($event, index)"
+             inputmode="decimal"
+             contenteditable>
           {{ item.quantity }}
         </div>
-        <div class="list-item__name" @blur="modifyItemName($event, index)" contenteditable>
+        <div class="list-item__name"
+             @blur="modifyItemName($event, index)"
+             @keypress.enter="modifyItemName($event, index)"
+             contenteditable>
           {{ item.name }}
         </div>
         <button @click="deleteItem(index, item.name)" class="list-link__delete">
@@ -50,17 +57,21 @@ export default {
     },
     modifyItemQuantity(event, index) {
       const list = this.$store.state.lists[this.$route.params.index];
-      if (!isNaN(event.target.innerText)) {
+      if (event.target.innerText && !isNaN(event.target.innerText)) {
         list.items[index].quantity = event.target.innerText
         this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
       } else {
         event.target.innerText = list.items[index].quantity
       }
+      event.target.blur();
     },
     modifyItemName(event, index) {
       const list = this.$store.state.lists[this.$route.params.index];
-      list.items[index].name = event.target.innerText
-      this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+      if (event.target.innerText) {
+        list.items[index].name = event.target.innerText
+        this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+      }
+      event.target.blur();
     },
     toggleCheckedState(index) {
       const list = this.$store.state.lists[this.$route.params.index];
