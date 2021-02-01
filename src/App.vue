@@ -2,18 +2,22 @@
   <div class="app">
     <app-header/>
     <main class="main" id="main">
-      <transition name="fade" mode="out-in">
-        <router-view :key="$route.fullPath"/>
-      </transition>
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component"/>
+        </transition>
+      </router-view>
     </main>
     <footer class="footer">
-      <a href="https://www.digital-masterpiece.com/" target="_blank" rel="noopener" class="dm-link">&copy; Digital Masterpiece</a>
+      <a href="https://www.digital-masterpiece.com/" target="_blank" rel="noopener" class="dm-link">&copy; Digital
+        Masterpiece</a>
     </footer>
   </div>
 </template>
 
 <script>
 import AppHeader from "@/components/AppHeader";
+
 export default {
   components: {AppHeader},
   mounted() {

@@ -7,6 +7,9 @@
         <router-link :to="{name: 'List', params: {index: index}}" class="list-link">
           <div>{{ list.name }}</div>
         </router-link>
+        <button @click="shareList(index)" class="list-link__share">
+          <font-awesome-icon icon="share-alt-square"/>
+        </button>
         <button @click="deleteList(index)" class="list-link__delete">
           <font-awesome-icon icon="times-circle"/>
         </button>
@@ -16,7 +19,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import {mapState} from 'vuex'
+import List from "@/classes/List";
+
 export default {
   computed: mapState({
     lists: state => state.lists
@@ -26,10 +31,37 @@ export default {
       if (confirm('Are you sure you want to delete ' + this.$store.state.lists[0].name + '?')) {
         this.$store.dispatch('deleteList', index)
       }
+    },
+    shareList(index) {
+      if (this.$store.state.lists[index]) {
+        this.$router.push({name: 'Home', query: {import: btoa(JSON.stringify(this.$store.state.lists[index]))}})
+            .then(() => {
+              const input = document.createElement('input');
+              input.type = 'text';
+              input.value = window.location.href;
+              document.body.appendChild(input);
+              input.select();
+              input.setSelectionRange(0, 99999);
+              document.execCommand("copy");
+              input.remove();
+            }).then(() => {
+              this.$router.go(-1);
+        })
+      }
     }
   },
   mounted() {
     document.title = 'grocerieslist.app';
+
+    if (this.$route.query.import) {
+      let list = JSON.parse(atob(this.$route.query.import));
+
+      this.$store.dispatch('createList',
+          new List(list.name, list.items)
+      ).then(() => {
+        this.$router.push('/' + (this.$store.state.lists.length - 1))
+      })
+    }
   }
 }
 </script>
@@ -40,7 +72,7 @@ export default {
 }
 
 .list-link {
-  @apply flex justify-between items-center p-4 border border-green-700 rounded bg-green-800 shadow-md transition duration-200 ease-in-out font-normal;
+  @apply flex justify-between items-center p-4 pl-14 border border-green-700 rounded bg-green-800 shadow-md transition duration-200 ease-in-out font-normal;
 
   &__container {
     @apply relative leading-none;
@@ -56,6 +88,10 @@ export default {
     &:hover, &:focus {
       @apply text-red-400;
     }
+  }
+
+  &__share {
+    @apply absolute top-0 left-0 mt-2 ml-4 text-2xl;
   }
 }
 </style>
