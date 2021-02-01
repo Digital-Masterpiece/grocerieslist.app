@@ -8,7 +8,10 @@
 <script>
 import NewListForm from '../components/NewListForm'
 export default {
-  components: {NewListForm}
+  components: {NewListForm},
+  mounted() {
+    document.title = 'New List | grocerieslist.app';
+  }
 }
 </script>
 

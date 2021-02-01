@@ -89,6 +89,9 @@ export default {
         this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
       }
     }
+  },
+  mounted() {
+    document.title = this.list.name + ' | grocerieslist.app';
   }
 }
 </script>

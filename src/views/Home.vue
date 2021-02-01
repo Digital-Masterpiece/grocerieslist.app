@@ -28,7 +28,9 @@ export default {
       }
     }
   },
-
+  mounted() {
+    document.title = 'grocerieslist.app';
+  }
 }
 </script>
 
