@@ -19,10 +19,10 @@ export default {
   },
   methods: {
     createList() {
-      this.$store.dispatch('createList',
+      this.$store.dispatch('updateList',
           new List(this.name, [])
       ).then(() => {
-        this.$router.push('/' + (this.$store.state.lists.length - 1))
+        this.$router.push('/' + this.$store.state.lists[this.$store.state.lists.length - 1].id)
       })
     }
   }

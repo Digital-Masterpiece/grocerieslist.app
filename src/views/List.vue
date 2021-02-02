@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="list-name">{{ list.name }}</h1>
-    <new-item-form :parent-index="$route.params.index"/>
+    <new-item-form/>
     <button @click="deleteCheckedItems" class="remove-checked" title="Remove All Checked Items">Remove Checked</button>
     <button @click="filterItems('alpha')" class="filter-button" title="Filter Alphanumerically">A-Z</button>
     <div v-if="list.items.length" class="list-items">
@@ -39,54 +39,54 @@ export default {
   components: {NewItemForm},
   computed: {
     list() {
-      return this.$store.state.lists[this.$route.params.index]
+      return this.$store.getters.getListFromId(this.$route.params.id)
     }
   },
   methods: {
     deleteCheckedItems() {
-      const list = this.$store.state.lists[this.$route.params.index];
+      const list = this.list
       list.items = list.items.filter(item => !item.checked)
-      this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+      this.$store.dispatch('updateList', list)
     },
     deleteItem(index, name) {
       if (confirm('Are you sure you want to remove ' + name + ' from this list?')) {
-        const list = this.$store.state.lists[this.$route.params.index];
+        const list = this.list
         list.items.splice(index, 1)
-        this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+        this.$store.dispatch('updateList', list)
       }
     },
     modifyItemQuantity(event, index) {
-      const list = this.$store.state.lists[this.$route.params.index];
+      const list = this.list
       if (event.target.innerText && !isNaN(event.target.innerText)) {
         list.items[index].quantity = event.target.innerText
-        this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+        this.$store.dispatch('updateList', list)
       } else {
         event.target.innerText = list.items[index].quantity
       }
-      event.target.blur();
+      event.target.blur()
     },
     modifyItemName(event, index) {
-      const list = this.$store.state.lists[this.$route.params.index];
+      const list = this.list
       if (event.target.innerText) {
         list.items[index].name = event.target.innerText
-        this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+        this.$store.dispatch('updateList', list)
       }
       event.target.blur();
     },
     toggleCheckedState(index) {
-      const list = this.$store.state.lists[this.$route.params.index];
-      list.items[index].checked = !list.items[index].checked;
-      this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+      const list = this.list
+      list.items[index].checked = !list.items[index].checked
+      this.$store.dispatch('updateList', list)
     },
     filterItems(type) {
       if (type === 'alpha') {
-        const list = this.$store.state.lists[this.$route.params.index];
+        const list = this.list;
         list.items.sort((a, b) => {
           if (a.name < b.name) return -1
           if (a.name > b.name) return 1
           return 0;
         })
-        this.$store.dispatch('updateList', {index: this.$route.params.index, list: list})
+        this.$store.dispatch('updateList', list)
       }
     }
   },

@@ -1,16 +1,14 @@
 import {createStore} from 'vuex'
+import {v4 as uuidv4} from 'uuid'
 
 export default createStore({
     state: {
         lists: []
     },
     getters: {
-        getList(state, index) {
-            if (state.lists[index]) {
-                return state.lists[index]
-            } else {
-                return null;
-            }
+        // https://vuex.vuejs.org/guide/getters.html#method-style-access Good luck future Nick.
+        getListFromId: (state) => (id) => {
+            return state.lists.find(list => list.id === id)
         }
     },
     mutations: {
@@ -18,41 +16,46 @@ export default createStore({
             if (localStorage.getItem('lists', state.lists)) {
                 state.lists = JSON.parse(localStorage.getItem('lists'));
             }
+            // Older versions of this application may not have an ID specified for each list.
+            state.lists.forEach(list => {
+                if (!list.id) {
+                    list.id = uuidv4();
+                }
+            })
         },
-        mutateList(state, payload) {
-            if (payload.index !== null) {
-                state.lists[payload.index] = payload.list
+        mutateList(state, list) {
+            if (list.id) {
+                let existingList = state.lists.find(existingList => existingList.id === list.id);
+                // Check if the list is linked from another person and being updated/overridden.
+                if (existingList) {
+                    state.lists[state.lists.findIndex(existingList => existingList.id === list.id)] = list
+                } else {
+                    state.lists.push(list)
+                }
             } else {
-                state.lists.push(payload.list)
+                list.id = uuidv4();
+                state.lists.push(list)
             }
             localStorage.setItem('lists', JSON.stringify(state.lists))
         },
-        removeList(state, index) {
-            state.lists.splice(index, 1)
+        removeList(state, id) {
+            state.lists.splice(state.lists.findIndex(list => list.id === id), 1)
             localStorage.setItem('lists', JSON.stringify(state.lists))
         }
     },
     actions: {
-        createList(context, list) {
+        updateList(context, list) {
             return new Promise(resolve => {
                 setTimeout(() => {
-                    context.commit('mutateList', {index: null, list: list})
+                    context.commit('mutateList', list)
                     resolve()
                 }, 1)
             })
         },
-        updateList(context, {index, list}) {
+        deleteList(context, id) {
             return new Promise(resolve => {
                 setTimeout(() => {
-                    context.commit('mutateList', {index: index, list: list})
-                    resolve()
-                }, 1)
-            })
-        },
-        deleteList(context, index) {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    context.commit('removeList', index)
+                    context.commit('removeList', id)
                     resolve()
                 }, 1)
             })

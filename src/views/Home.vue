@@ -3,14 +3,14 @@
     <h1 class="sr-only">Welcome!</h1>
     <p v-if="lists.length === 0">Create a new list to get started!</p>
     <div v-else class="list-container">
-      <div v-for="(list, index) in lists" :key="index" class="list-link__container">
-        <router-link :to="{name: 'List', params: {index: index}}" class="list-link">
+      <div v-for="list in lists" :key="list.id" class="list-link__container">
+        <router-link :to="{name: 'List', params: {id: list.id}}" class="list-link">
           <div>{{ list.name }}</div>
         </router-link>
-        <button @click="shareList(index)" class="list-link__share">
+        <button @click="shareList(list.id)" class="list-link__share">
           <font-awesome-icon icon="share-alt-square"/>
         </button>
-        <button @click="deleteList(index)" class="list-link__delete">
+        <button @click="deleteList(list.id)" class="list-link__delete">
           <font-awesome-icon icon="times-circle"/>
         </button>
       </div>
@@ -20,32 +20,35 @@
 
 <script>
 import {mapState} from 'vuex'
-import List from "@/classes/List";
 
 export default {
   computed: mapState({
     lists: state => state.lists
   }),
   methods: {
-    deleteList(index) {
-      if (confirm('Are you sure you want to delete ' + this.$store.state.lists[0].name + '?')) {
-        this.$store.dispatch('deleteList', index)
+    deleteList(id) {
+      if (confirm('Are you sure you want to delete ' + this.$store.getters.getListFromId(id).name + '?')) {
+        this.$store.dispatch('deleteList', id)
       }
     },
-    shareList(index) {
-      if (this.$store.state.lists[index]) {
-        this.$router.push({name: 'Home', query: {import: btoa(JSON.stringify(this.$store.state.lists[index]))}})
-            .then(() => {
-              const input = document.createElement('input');
-              input.type = 'text';
-              input.value = window.location.href;
-              document.body.appendChild(input);
-              input.select();
-              input.setSelectionRange(0, 99999);
-              document.execCommand("copy");
-              input.remove();
-            }).then(() => {
-              this.$router.go(-1);
+    shareList(id) {
+      if (this.$store.getters.getListFromId(id)) {
+        this.$router.push({
+          name: 'Home',
+          query: {
+            import: btoa(JSON.stringify(this.$store.getters.getListFromId(id)))
+          }
+        }).then(() => {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = window.location.href;
+          document.body.appendChild(input);
+          input.select();
+          input.setSelectionRange(0, 99999);
+          document.execCommand("copy");
+          input.remove();
+        }).then(() => {
+          this.$router.go(-1);
         })
       }
     }
@@ -55,11 +58,8 @@ export default {
 
     if (this.$route.query.import) {
       let list = JSON.parse(atob(this.$route.query.import));
-
-      this.$store.dispatch('createList',
-          new List(list.name, list.items)
-      ).then(() => {
-        this.$router.push('/' + (this.$store.state.lists.length - 1))
+      this.$store.dispatch('updateList', list).then(() => {
+        this.$router.push('/' + list.id)
       })
     }
   }
