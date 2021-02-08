@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="sr-only">Welcome!</h1>
-    <p v-if="lists.length === 0">Create a new list to get started!</p>
+    <p v-if="lists.length === 0" class="text-center">Create a new list to get started!</p>
     <div v-else class="list-container">
       <div v-for="list in lists" :key="list.id" class="list-link__container">
         <router-link :to="{name: 'List', params: {id: list.id}}" class="list-link">
