@@ -7,9 +7,9 @@ import router from './router'
 import store from './store'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlusCircle, faListAlt, faTimesCircle, faSquare, faCheckSquare, faShareAltSquare } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faListAlt, faTimesCircle, faSquare, faCheckSquare, faShareAltSquare, faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faPlusCircle, faListAlt, faTimesCircle, faSquare, faCheckSquare, faShareAltSquare)
+library.add(faPlusCircle, faListAlt, faTimesCircle, faSquare, faCheckSquare, faShareAltSquare, faClipboardCheck)
 
 createApp(App)
     .component('font-awesome-icon', FontAwesomeIcon)

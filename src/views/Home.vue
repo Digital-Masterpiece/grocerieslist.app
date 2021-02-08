@@ -49,6 +49,12 @@ export default {
           input.remove();
         }).then(() => {
           this.$router.go(-1);
+
+          const notice = document.querySelector('.link-copied');
+          notice.classList.add('shown')
+          setTimeout(() => {
+            notice.classList.remove('shown')
+          }, 1000)
         })
       }
     }

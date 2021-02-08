@@ -7,6 +7,7 @@
           <component :is="Component"/>
         </transition>
       </router-view>
+      <link-copied-notice/>
     </main>
     <footer class="footer">
       <a href="https://www.digital-masterpiece.com/" target="_blank" rel="noopener" class="dm-link">&copy; Digital
@@ -17,9 +18,10 @@
 
 <script>
 import AppHeader from "@/components/AppHeader";
+import LinkCopiedNotice from "@/components/LinkCopiedNotice";
 
 export default {
-  components: {AppHeader},
+  components: {LinkCopiedNotice, AppHeader},
   mounted() {
     this.$store.commit('initListFromLocalStorage')
   }
