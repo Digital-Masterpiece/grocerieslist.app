@@ -43,9 +43,9 @@ export default {
         }).then(() => {
           if (supportsShareApi) {
             navigator.share({
-              title: list.title,
+              title: list.name,
               url: window.location.href,
-              text: 'Check out my ' + list.title + ' list on grocerieslist.app!'
+              text: 'Check out my ' + list.name + ' list on grocerieslist.app!'
             }).catch(error => console.error(error))
           } else {
             const input = document.createElement('input');
