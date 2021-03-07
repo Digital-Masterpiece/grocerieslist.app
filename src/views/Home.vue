@@ -27,7 +27,7 @@ export default {
   }),
   methods: {
     deleteList(id) {
-      if (confirm('Are you sure you want to delete ' + this.$store.getters.getListFromId(id).name + '?')) {
+      if (confirm('Are you sure you want to delete your ' + this.$store.getters.getListFromId(id).name + ' list?')) {
         this.$store.dispatch('deleteList', id)
       }
     },
