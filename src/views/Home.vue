@@ -32,29 +32,42 @@ export default {
       }
     },
     shareList(id) {
-      if (this.$store.getters.getListFromId(id)) {
+      const supportsShareApi = navigator.share;
+      const list = this.$store.getters.getListFromId(id)
+      if (list) {
         this.$router.push({
           name: 'Home',
           query: {
-            import: btoa(JSON.stringify(this.$store.getters.getListFromId(id)))
+            import: btoa(JSON.stringify(list))
           }
         }).then(() => {
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.value = window.location.href;
-          document.body.appendChild(input);
-          input.select();
-          input.setSelectionRange(0, 99999);
-          document.execCommand("copy");
-          input.remove();
+          if (supportsShareApi) {
+            navigator.share({
+              title: list.title,
+              url: window.location.href,
+              text: 'Check out my list on grocerieslist.app!'
+            }).catch(error => console.error(error))
+          } else {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = window.location.href;
+            document.body.appendChild(input);
+            input.select();
+            input.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            input.remove();
+          }
+
         }).then(() => {
           this.$router.go(-1);
 
-          const notice = document.querySelector('.link-copied');
-          notice.classList.add('shown')
-          setTimeout(() => {
-            notice.classList.remove('shown')
-          }, 1000)
+          if (!supportsShareApi) {
+            const notice = document.querySelector('.link-copied');
+            notice.classList.add('shown')
+            setTimeout(() => {
+              notice.classList.remove('shown')
+            }, 1000)
+          }
         })
       }
     }
