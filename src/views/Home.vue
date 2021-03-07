@@ -45,7 +45,7 @@ export default {
             navigator.share({
               title: list.title,
               url: window.location.href,
-              text: 'Check out my list on grocerieslist.app!'
+              text: 'Check out my ' + list.title + ' list on grocerieslist.app!'
             }).catch(error => console.error(error))
           } else {
             const input = document.createElement('input');
