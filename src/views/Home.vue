@@ -7,9 +7,7 @@
         <router-link :to="{name: 'List', params: {id: list.id}}" class="list-link">
           <div>{{ list.name }}</div>
         </router-link>
-        <button @click="shareList(list.id)" class="list-link__share">
-          <font-awesome-icon icon="share-alt-square"/>
-        </button>
+        <share-button :list="list" class="list-link__share-button" />
         <button @click="deleteList(list.id)" class="list-link__delete">
           <font-awesome-icon icon="times-circle"/>
         </button>
@@ -20,8 +18,10 @@
 
 <script>
 import {mapState} from 'vuex'
+import ShareButton from "@/components/ShareButton";
 
 export default {
+  components: {ShareButton},
   computed: mapState({
     lists: state => state.lists
   }),
@@ -29,46 +29,6 @@ export default {
     deleteList(id) {
       if (confirm('Are you sure you want to delete your ' + this.$store.getters.getListFromId(id).name + ' list?')) {
         this.$store.dispatch('deleteList', id)
-      }
-    },
-    shareList(id) {
-      const supportsShareApi = navigator.share;
-      const list = this.$store.getters.getListFromId(id)
-      if (list) {
-        this.$router.push({
-          name: 'Home',
-          query: {
-            import: btoa(JSON.stringify(list))
-          }
-        }).then(() => {
-          if (supportsShareApi) {
-            navigator.share({
-              title: list.name,
-              url: window.location.href,
-              text: 'Check out my ' + list.name + ' list on grocerieslist.app!'
-            }).catch(error => console.error(error))
-          } else {
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = window.location.href;
-            document.body.appendChild(input);
-            input.select();
-            input.setSelectionRange(0, 99999);
-            document.execCommand("copy");
-            input.remove();
-          }
-
-        }).then(() => {
-          this.$router.go(-1);
-
-          if (!supportsShareApi) {
-            const notice = document.querySelector('.link-copied');
-            notice.classList.add('shown')
-            setTimeout(() => {
-              notice.classList.remove('shown')
-            }, 1000)
-          }
-        })
       }
     }
   },
@@ -109,8 +69,8 @@ export default {
     }
   }
 
-  &__share {
-    @apply absolute top-0 left-0 mt-2 ml-4 text-2xl;
+  &__share-button {
+    @apply absolute top-0 left-0 mt-2 ml-4;
   }
 }
 </style>

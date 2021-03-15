@@ -1,6 +1,6 @@
 <template>
   <form class="new-item-form" @submit.prevent="addItem">
-    <div class="new-item-form__field">
+    <div class="new-item-form__field new-item-form__field--name">
       <label for="item_name" class="sr-only">Item Name</label>
       <input type="text" id="item_name" v-model="name" class="new-item-form__field__input" placeholder="Item Name"
              required>
@@ -51,8 +51,12 @@ export default {
   &__field {
     @apply flex;
 
+    &--name {
+      @apply flex-grow;
+    }
+
     &--quantity {
-      @apply ml-2 w-20;
+      @apply ml-4 w-20;
     }
 
     &__input {
@@ -61,7 +65,7 @@ export default {
   }
 
   &__submit {
-    @apply text-2xl ml-2;
+    @apply text-2xl ml-4;
   }
 }
 </style>

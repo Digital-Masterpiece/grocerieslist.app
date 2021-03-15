@@ -2,8 +2,15 @@
   <div>
     <h1 class="list-name">{{ list.name }}</h1>
     <new-item-form/>
-    <button @click="deleteCheckedItems" class="remove-checked" title="Remove All Checked Items">Remove Checked</button>
-    <button @click="filterItems('alpha')" class="filter-button" title="Filter Alphanumerically">A-Z</button>
+    <div class="list-actions">
+      <share-button :list="list" class="list-actions__button list-actions__button--share" type="text" />
+      <button @click="deleteCheckedItems" class="list-actions__button list-actions__button--remove"
+              title="Remove All Checked Items">Remove Checked
+      </button>
+      <button @click="filterItems('alpha')" class="list-actions__button list-actions__button--sort"
+              title="Filter Alphanumerically">Sort A-Z
+      </button>
+    </div>
     <div v-if="list.items.length" class="list-items">
       <div v-for="(item, index) in list.items" :key="index" class="list-item" :class="{'obtained': item.checked}">
         <button class="list-item__check" @click="toggleCheckedState(index)">
@@ -28,15 +35,16 @@
         </button>
       </div>
     </div>
-    <div v-else>This list has no items. Please add one.</div>
+    <div v-else class="no-items">This list has no items. Please add one.</div>
   </div>
 </template>
 
 <script>
 import NewItemForm from "@/components/NewItemForm";
+import ShareButton from "@/components/ShareButton";
 
 export default {
-  components: {NewItemForm},
+  components: {ShareButton, NewItemForm},
   computed: {
     list() {
       return this.$store.getters.getListFromId(this.$route.params.id)
@@ -125,11 +133,39 @@ export default {
   }
 }
 
-.remove-checked {
-  @apply text-xs bg-red-800 p-2 rounded shadow-md mb-4 border border-red-700 font-light leading-none;
+.list-actions {
+  @apply flex justify-center items-center mb-8 space-x-4;
+
+  &__button {
+    @apply text-xs p-2 rounded shadow-md border font-light leading-none transition duration-200 ease-in-out;
+
+    &--remove {
+      @apply bg-red-800 border-red-700;
+
+      &:hover, &:focus {
+        @apply bg-red-700 border-red-600;
+      }
+    }
+
+    &--sort {
+      @apply bg-yellow-800 border-yellow-700;
+
+      &:hover, &:focus {
+        @apply bg-yellow-700 border-yellow-600;
+      }
+    }
+
+    &--share {
+      @apply bg-blue-800 border-blue-700;
+
+      &:hover, &:focus {
+        @apply bg-blue-700 border-blue-600;
+      }
+    }
+  }
 }
 
-.filter-button {
-  @apply text-xs bg-yellow-800 p-2 rounded shadow-md mb-4 ml-4 border border-yellow-700 font-light leading-none;
+.no-items {
+  @apply text-center;
 }
 </style>
