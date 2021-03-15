@@ -76,7 +76,7 @@ export default {
     document.title = 'grocerieslist.app';
 
     if (this.$route.query.import) {
-      let list = JSON.parse(atob(this.$route.query.import));
+      let list = JSON.parse(atob(this.$route.query.import.toString()));
       this.$store.dispatch('updateList', list).then(() => {
         this.$router.push('/' + list.id)
       })
