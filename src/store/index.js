@@ -13,7 +13,7 @@ export default createStore({
     },
     mutations: {
         initListFromLocalStorage(state) {
-            if (localStorage.getItem('lists', state.lists)) {
+            if (localStorage.getItem('lists')) {
                 state.lists = JSON.parse(localStorage.getItem('lists'));
             }
             // Older versions of this application may not have an ID specified for each list.
