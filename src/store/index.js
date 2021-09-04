@@ -5,47 +5,55 @@ export default createStore({
   state: {
     lists: []
   },
+  getters: {
+    getListFromId: (state) => (id) => state.lists.find(list => list.id === id)
+  },
   mutations: {
-    initListFromLocalStorage (state) {
+    initListsFromLocalStorage (state) {
       if (localStorage.getItem('lists')) {
         state.lists = JSON.parse(localStorage.getItem('lists'))
       }
     },
-    mutateList (state, list) {
-      if (list.id) {
-        const existingList = state.lists.find(existingList => existingList.id === list.id)
-        // Check if the list is linked from another person and being updated/overridden.
-        if (existingList) {
-          state.lists[state.lists.findIndex(existingList => existingList.id === list.id)] = list
-        } else {
-          state.lists.push(list)
-        }
-      } else {
-        list.id = uuidv4()
-        state.lists.push(list)
-      }
-      localStorage.setItem('lists', JSON.stringify(state.lists))
+    createList (state, list) {
+      list.id = uuidv4()
+      state.lists.push(list)
     },
-    removeList (state, id) {
+    updateList (state, list) {
+      state.lists[state.lists.findIndex(existingList => existingList.id === list.id)] = list
+    },
+    deleteList (state, id) {
       state.lists.splice(state.lists.findIndex(list => list.id === id), 1)
+    },
+    saveListsToMachine (state) {
       localStorage.setItem('lists', JSON.stringify(state.lists))
     }
   },
   actions: {
+    createList (context, list) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          context.commit('createList', list)
+          context.commit('saveListsToMachine')
+          resolve()
+        }, 0)
+      })
+    },
     updateList (context, list) {
       return new Promise(resolve => {
         setTimeout(() => {
-          context.commit('mutateList', list)
+          context.commit('updateList', list)
+          context.commit('saveListsToMachine')
           resolve()
-        }, 1)
+        }, 0)
       })
     },
     deleteList (context, id) {
       return new Promise(resolve => {
         setTimeout(() => {
-          context.commit('removeList', id)
+          context.commit('deleteList', id)
+          context.commit('saveListsToMachine')
           resolve()
-        }, 1)
+        }, 0)
       })
     }
   },
