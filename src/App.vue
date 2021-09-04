@@ -1,72 +1,30 @@
 <template>
-  <div class="app">
-    <app-header/>
-    <main class="main" id="main">
-      <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component"/>
-        </transition>
-      </router-view>
-      <link-copied-notice/>
-    </main>
-    <footer class="footer">
-      <a href="https://www.digital-masterpiece.com/" target="_blank" rel="noopener" class="dm-link">&copy; Digital
-        Masterpiece</a>
-    </footer>
+  <div id="nav">
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
   </div>
+  <router-view/>
 </template>
 
-<script>
-import AppHeader from "@/components/AppHeader";
-import LinkCopiedNotice from "@/components/LinkCopiedNotice";
-
-export default {
-  components: {LinkCopiedNotice, AppHeader},
-  mounted() {
-    this.$store.commit('initListFromLocalStorage')
-  }
-}
-</script>
-
 <style lang="scss">
-html {
-  font-family: 'Inter', sans-serif;
-  @apply bg-gray-900 text-white font-light;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-.app {
-  @apply flex flex-col justify-center items-center w-full;
-}
+#nav {
+  padding: 30px;
 
-.main {
-  @apply p-6 w-full max-w-lg mx-auto flex-grow;
-}
+  a {
+    font-weight: bold;
+    color: #2c3e50;
 
-.footer {
-  @apply p-6 w-full max-w-lg mx-auto text-xs text-center flex-shrink-0;
-}
-
-.dm-link {
-  @apply text-gray-400 font-normal transition;
-
-  &:hover, &:focus {
-    @apply underline text-gray-300;
+    &.router-link-exact-active {
+      color: #42b983;
+    }
   }
 }
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.25s ease;
-}
-
-.fade-leave-to {
-  opacity: 0;
-  transform: translateX(-2rem);
-}
-
-.fade-enter-from {
-  opacity: 0;
-  transform: translateX(2rem);
-}
-
 </style>
