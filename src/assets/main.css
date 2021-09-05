@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 html {
-    @apply bg-gl-gray;
+    @apply bg-gl-gray font-normal;
+    font-family: 'Barlow', sans-serif;
 }
 
 body {
