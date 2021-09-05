@@ -7,7 +7,8 @@ module.exports = {
         'gl-gray': '#D5D8E5',
         'gl-blue': '#A3ACE0',
         'gl-darkgray': '#2C304D',
-        'gl-darkblue': '#283380'
+        'gl-darkblue': '#283380',
+        'gl-lightblue': '#BEC4E5'
       }
     }
   },

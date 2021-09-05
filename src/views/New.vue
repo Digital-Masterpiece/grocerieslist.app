@@ -43,7 +43,7 @@ export default {
   }
 
   &__container {
-    @apply shadow rounded;
+    @apply rounded border border-gl-lightblue;
   }
 
   &__input {
@@ -51,10 +51,10 @@ export default {
   }
 
   &__button {
-    @apply bg-gray-100 px-3 py-2 rounded-r transition duration-200 ease-in-out;
+    @apply bg-gray-100 px-3 py-2 rounded-r transition duration-200 ease-in-out border-l border-gl-lightblue;
 
     &:hover, &:focus {
-      @apply bg-green-100;
+      @apply bg-gl-lightblue;
     }
   }
 }
