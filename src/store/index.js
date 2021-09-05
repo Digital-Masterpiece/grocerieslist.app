@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import { v4 as uuidv4 } from 'uuid'
 
 export default createStore({
   state: {
@@ -15,7 +14,6 @@ export default createStore({
       }
     },
     createList (state, list) {
-      list.id = uuidv4()
       state.lists.push(list)
     },
     updateList (state, list) {

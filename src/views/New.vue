@@ -3,7 +3,7 @@
     <form class="new-list__form" @submit.prevent="createList">
       <div class="new-list__container">
         <label for="name" class="sr-only">List Name</label>
-        <input v-model="name"
+        <input v-model="name" required
                class="new-list__input"
                type="text" id="name" placeholder="List Name">
 
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import List from '@/classes/List'
+import List from '@/classes/List.js'
 
 export default {
   data () {
@@ -47,7 +47,7 @@ export default {
   }
 
   &__input {
-    @apply bg-white px-3 py-2 rounded-l outline-none;
+    @apply w-56 bg-white px-3 py-2 rounded-l outline-none;
   }
 
   &__button {

@@ -12,7 +12,7 @@
   @apply grid place-items-center;
 
   &__container {
-    @apply flex justify-between w-full max-w-sm p-6 pb-0;
+    @apply flex justify-between w-full max-w-lg p-6 pb-0;
   }
 }
 </style>

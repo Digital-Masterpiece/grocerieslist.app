@@ -1,12 +1,14 @@
+import { v4 as uuidv4 } from 'uuid'
+
 export default class Item {
-  constructor (id, name, quantity, checked) {
+  constructor (name, quantity) {
     // Created and updated timestamps default to creation time.
     const now = new Date().getTime()
 
-    this.id = id
+    this.id = uuidv4()
     this.name = name
     this.quantity = quantity
-    this.checked = checked
+    this.checked = false
     this.created = now
     this.updated = now
     this.deleted = null

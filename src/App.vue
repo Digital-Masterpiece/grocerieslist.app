@@ -27,6 +27,6 @@ export default {
 
 <style lang="scss">
 .main {
-  @apply p-6 w-full max-w-sm mx-auto;
+  @apply p-6 w-full max-w-lg mx-auto;
 }
 </style>
