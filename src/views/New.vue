@@ -1,7 +1,6 @@
 <template>
   <div class="new-list">
-    <form class="new-list__form">
-
+    <form class="new-list__form" @submit.prevent="createList">
       <div class="new-list__container">
         <label for="name" class="sr-only">List Name</label>
         <input v-model="name"
@@ -15,10 +14,21 @@
 </template>
 
 <script>
+import List from '@/classes/List'
+
 export default {
   data () {
     return {
       name: null
+    }
+  },
+  methods: {
+    createList () {
+      this.$store.dispatch('createList', new List(this.name, []))
+        .then(() => this.$router.push({
+          name: 'List',
+          params: { id: this.$store.state.lists[this.$store.state.lists.length - 1] }
+        }))
     }
   }
 }
