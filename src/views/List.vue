@@ -21,21 +21,30 @@
     <div
       v-if="list
       && list.items.length !== 0
-      && list.items.filter(item => item.deleted).length !== list.items.length">
+      && list.items.filter(item => item.deleted).length !== list.items.length"
+      class="items">
       <div v-for="(item, index) in list.items" :key="index">
-        <div v-if="!item.deleted">
+        <div v-if="!item.deleted" class="item">
           <div contenteditable
                inputmode="decimal"
+               class="item__quantity"
+               @focus="executeSelectAll()"
                @blur="modifyItemQuantity($event, index)"
                @keypress.enter="modifyItemQuantity($event, index)">
             {{ item.quantity }}
           </div>
           <div contenteditable
+               class="item__name"
+               @focus="executeSelectAll()"
                @blur="modifyItemName($event, index)"
                @keypress.enter="modifyItemName($event, index)">
             {{ item.name }}
           </div>
-          <button @click="deleteItem(index)">Delete</button>
+          <button @click="deleteItem(index)"
+                  :title="'Remove ' + item.name + ' from this list.'"
+                  class="item__icon--delete">
+            <font-awesome-icon icon="times-circle"/>
+          </button>
         </div>
       </div>
     </div>
@@ -56,7 +65,10 @@ export default {
     }
   },
   methods: {
-    retrieveList () {
+    executeSelectAll () {
+      document.execCommand('selectAll', false, null)
+    },
+    updateLocalList () {
       this.list = this.$store.getters.getListFromId(this.$route.params.id)
     },
     addItemToList () {
@@ -65,7 +77,7 @@ export default {
       this.$store.dispatch('updateList', this.list).then(() => {
         this.name = null
         this.quantity = 1
-        this.retrieveList()
+        this.updateLocalList()
       })
     },
     modifyItemQuantity (event, index) {
@@ -73,7 +85,7 @@ export default {
         const item = this.list.items[index]
         item.quantity = event.target.innerText
         item.updated = new Date().getTime()
-        this.$store.dispatch('updateList', this.list).then(() => this.retrieveList())
+        this.$store.dispatch('updateList', this.list).then(() => this.updateLocalList())
       } else {
         event.target.innerText = this.list.items[index].quantity
       }
@@ -84,7 +96,7 @@ export default {
         const item = this.list.items[index]
         item.name = event.target.innerText
         item.updated = new Date().getTime()
-        this.$store.dispatch('updateList', this.list).then(() => this.retrieveList())
+        this.$store.dispatch('updateList', this.list).then(() => this.updateLocalList())
       }
       event.target.blur()
     },
@@ -95,7 +107,7 @@ export default {
     }
   },
   mounted () {
-    this.retrieveList()
+    this.updateLocalList()
   }
 }
 </script>
@@ -117,6 +129,36 @@ export default {
 
     &:hover, &:focus {
       @apply bg-green-100;
+    }
+  }
+}
+
+.item {
+  @apply flex justify-start items-center bg-white rounded border border-gl-lightblue w-full h-14;
+
+  &s {
+    @apply grid w-full gap-4 mt-8;
+  }
+
+  &__quantity, &__name {
+    @apply px-4 h-full;
+  }
+
+  &__quantity {
+    @apply grid place-items-center w-14 text-center border-r border-gl-lightblue;
+  }
+
+  &__name {
+    @apply flex justify-start items-center flex-grow;
+  }
+
+  &__icon {
+    &--delete {
+      @apply text-xl ml-auto px-4 py-3;
+
+      &:hover, &:focus {
+        @apply text-red-700;
+      }
     }
   }
 }
