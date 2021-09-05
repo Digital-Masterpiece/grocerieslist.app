@@ -17,20 +17,30 @@
       <button type="submit" class="new-item__button">Add</button>
     </form>
 
-    <div v-for="(item, index) in list.items" :key="index">
-      <div contenteditable
-           inputmode="decimal"
-           @blur="modifyItemQuantity($event, index)"
-           @keypress.enter="modifyItemQuantity($event, index)">
-        {{ item.quantity }}
-      </div>
-
-      <div contenteditable
-           @blur="modifyItemName($event, index)"
-           @keypress.enter="modifyItemName($event, index)">
-        {{ item.name }}
+    <!-- Only display the list items if they are present and not all soft deleted. -->
+    <div
+      v-if="list
+      && list.items.length !== 0
+      && list.items.filter(item => item.deleted).length !== list.items.length">
+      <div v-for="(item, index) in list.items" :key="index">
+        <div v-if="!item.deleted">
+          <div contenteditable
+               inputmode="decimal"
+               @blur="modifyItemQuantity($event, index)"
+               @keypress.enter="modifyItemQuantity($event, index)">
+            {{ item.quantity }}
+          </div>
+          <div contenteditable
+               @blur="modifyItemName($event, index)"
+               @keypress.enter="modifyItemName($event, index)">
+            {{ item.name }}
+          </div>
+          <button @click="deleteItem(index)">Delete</button>
+        </div>
       </div>
     </div>
+    <div v-else class="no-items">Add items to this list above.</div>
+
   </div>
 </template>
 
@@ -77,6 +87,11 @@ export default {
         this.$store.dispatch('updateList', this.list).then(() => this.retrieveList())
       }
       event.target.blur()
+    },
+    deleteItem (index) {
+      this.list.items[index].deleted = new Date().getTime()
+      this.list.items.sort((a, b) => a.deleted > b.deleted ? 1 : -1)
+      this.$store.dispatch('updateList', this.list)
     }
   },
   mounted () {
@@ -104,5 +119,9 @@ export default {
       @apply bg-green-100;
     }
   }
+}
+
+.no-items {
+  @apply font-light text-center mt-4;
 }
 </style>
