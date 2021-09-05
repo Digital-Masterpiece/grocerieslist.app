@@ -17,8 +17,19 @@
       <button type="submit" class="new-item__button">Add</button>
     </form>
 
-    <div v-for="item in list.items" :key="item.id">
-      ({{ item.quantity }}) {{ item.name }}
+    <div v-for="(item, index) in list.items" :key="index">
+      <div contenteditable
+           inputmode="decimal"
+           @blur="modifyItemQuantity($event, index)"
+           @keypress.enter="modifyItemQuantity($event, index)">
+        {{ item.quantity }}
+      </div>
+
+      <div contenteditable
+           @blur="modifyItemName($event, index)"
+           @keypress.enter="modifyItemName($event, index)">
+        {{ item.name }}
+      </div>
     </div>
   </div>
 </template>
@@ -35,21 +46,41 @@ export default {
     }
   },
   methods: {
+    retrieveList () {
+      this.list = this.$store.getters.getListFromId(this.$route.params.id)
+    },
     addItemToList () {
       const item = new Item(this.name, this.quantity)
       this.list.items.push(item)
       this.$store.dispatch('updateList', this.list).then(() => {
         this.name = null
         this.quantity = 1
+        this.retrieveList()
       })
     },
-    retrieveList () {
-      this.list = this.$store.getters.getListFromId(this.$route.params.id)
+    modifyItemQuantity (event, index) {
+      if (event.target.innerText && !isNaN(event.target.innerText)) {
+        const item = this.list.items[index]
+        item.quantity = event.target.innerText
+        item.updated = new Date().getTime()
+        this.$store.dispatch('updateList', this.list).then(() => this.retrieveList())
+      } else {
+        event.target.innerText = this.list.items[index].quantity
+      }
+      event.target.blur()
+    },
+    modifyItemName (event, index) {
+      if (event.target.innerText) {
+        const item = this.list.items[index]
+        item.name = event.target.innerText
+        item.updated = new Date().getTime()
+        this.$store.dispatch('updateList', this.list).then(() => this.retrieveList())
+      }
+      event.target.blur()
     }
   },
   mounted () {
     this.retrieveList()
-    console.log(this.list)
   }
 }
 </script>
