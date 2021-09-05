@@ -1,4 +1,5 @@
 <template>
+  <app-header/>
   <main id="main" class="main">
     <router-view/>
   </main>
@@ -9,3 +10,10 @@
   @apply p-6;
 }
 </style>
+<script>
+import AppHeader from '@/components/AppHeader'
+
+export default {
+  components: { AppHeader }
+}
+</script>
