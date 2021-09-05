@@ -27,7 +27,7 @@ export default {
       this.$store.dispatch('createList', new List(this.name, []))
         .then(() => this.$router.push({
           name: 'List',
-          params: { id: this.$store.state.lists[this.$store.state.lists.length - 1] }
+          params: { id: this.$store.state.lists[this.$store.state.lists.length - 1].id }
         }))
     }
   }
