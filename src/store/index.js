@@ -29,6 +29,14 @@ export default createStore({
     }
   },
   actions: {
+    init (context) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          context.commit('initListsFromLocalStorage')
+          resolve()
+        }, 0)
+      })
+    },
     createList (context, list) {
       return new Promise(resolve => {
         setTimeout(() => {
