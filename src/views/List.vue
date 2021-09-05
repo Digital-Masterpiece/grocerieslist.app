@@ -23,8 +23,8 @@
       && list.items.length !== 0
       && list.items.filter(item => item.deleted).length !== list.items.length"
       class="items">
-      <div v-for="(item, index) in list.items" :key="index">
-        <div v-if="!item.deleted" class="item">
+      <div v-for="(item, index) in list.items.filter(i => !i.deleted)" :key="index">
+        <div class="item">
           <div contenteditable
                inputmode="decimal"
                class="item__quantity"
