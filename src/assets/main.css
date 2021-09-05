@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 html {
-    @apply bg-gray-300;
+    @apply bg-gl-gray;
+}
+
+body {
+    @apply text-gl-darkgray;
 }
 
 h1 {
