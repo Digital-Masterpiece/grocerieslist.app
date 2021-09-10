@@ -28,14 +28,12 @@
           <div contenteditable
                inputmode="decimal"
                class="item__quantity"
-               @focus="executeSelectAll()"
                @blur="modifyItemQuantity($event, index)"
                @keypress.enter="modifyItemQuantity($event, index)">
             {{ item.quantity }}
           </div>
           <div contenteditable
                class="item__name"
-               @focus="executeSelectAll()"
                @blur="modifyItemName($event, index)"
                @keypress.enter="modifyItemName($event, index)">
             {{ item.name }}
@@ -65,9 +63,6 @@ export default {
     }
   },
   methods: {
-    executeSelectAll () {
-      document.execCommand('selectAll', false, null)
-    },
     updateLocalList () {
       this.list = this.$store.getters.getListFromId(this.$route.params.id)
     },
