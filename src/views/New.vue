@@ -1,9 +1,11 @@
 <template>
   <div class="new-list">
+    <h1>New List</h1>
     <form class="new-list__form" @submit.prevent="createList">
       <div class="new-list__container">
         <label for="name" class="sr-only">List Name</label>
         <input v-model="name" required
+               ref="newListName"
                class="new-list__input"
                type="text" id="name" placeholder="List Name">
 
@@ -30,6 +32,11 @@ export default {
           params: { id: this.$store.state.lists[this.$store.state.lists.length - 1].id }
         }))
     }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.$refs.newListName.focus()
+    }, 0)
   }
 }
 </script>
