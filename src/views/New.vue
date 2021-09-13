@@ -3,7 +3,7 @@
     <h1>New List</h1>
     <form class="new-list__form" @submit.prevent="createList">
       <div class="new-list__container">
-        <label for="name" class="sr-only">List Name</label>
+        <label for="name" class="sr-only">New List Name</label>
         <input v-model="name" required
                ref="newListName"
                class="new-list__input"
@@ -34,9 +34,7 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.$refs.newListName.focus()
-    }, 0)
+    this.$refs.newListName.focus()
   }
 }
 </script>
