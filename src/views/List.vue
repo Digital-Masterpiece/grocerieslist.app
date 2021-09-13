@@ -19,36 +19,65 @@
 
     <!-- Only display the list items if they are present and not all soft deleted. -->
     <div
-      v-if="list
-      && list.items.length !== 0
+      v-if=" list.items.length !== 0
       && list.items.filter(item => item.deleted).length !== list.items.length"
       class="items">
-      <div v-for="(item, index) in list.items.filter(i => !i.deleted)" :key="index">
+      <div v-for="item in list.items.filter(i => !i.deleted && !i.checked)" :key="item.id">
         <div class="item">
-          <div contenteditable
-               inputmode="decimal"
-               class="item__quantity"
-               @blur="modifyItemQuantity($event, index)"
-               @keypress.enter="modifyItemQuantity($event, index)">
-            {{ item.quantity }}
+          <label :for="item.name" class="sr-only">{{ item.name }} Checked</label>
+          <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"/>
+          <div class="item__container">
+            <div contenteditable
+                 inputmode="decimal"
+                 class="item__quantity"
+                 @blur="modifyItemQuantity($event, item.id)"
+                 @keypress.enter="modifyItemQuantity($event, item.id)">
+              {{ item.quantity }}
+            </div>
+            <div contenteditable
+                 class="item__name"
+                 @blur="modifyItemName($event, item.id)"
+                 @keypress.enter="modifyItemName($event, item.id)">
+              {{ item.name }}
+            </div>
+            <button @click="deleteItem(item.id)"
+                    :title="'Remove ' + item.name + ' from this list.'"
+                    class="item__icon--delete">
+              <font-awesome-icon icon="times-circle"/>
+            </button>
           </div>
-          <div contenteditable
-               class="item__name"
-               @blur="modifyItemName($event, index)"
-               @keypress.enter="modifyItemName($event, index)">
-            {{ item.name }}
+        </div>
+      </div>
+      <h2 v-if="list.items.filter(i => !i.deleted && i.checked).length">Checked Items</h2>
+      <div v-for="item in list.items.filter(i => !i.deleted && i.checked)" :key="item.id">
+        <div class="item">
+          <label :for="item.name" class="sr-only">{{ item.name }} Checked</label>
+          <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"/>
+          <div class="item__container">
+            <div contenteditable
+                 inputmode="decimal"
+                 class="item__quantity"
+                 @blur="modifyItemQuantity($event, item.id)"
+                 @keypress.enter="modifyItemQuantity($event, item.id)">
+              {{ item.quantity }}
+            </div>
+            <div contenteditable
+                 class="item__name"
+                 @blur="modifyItemName($event, item.id)"
+                 @keypress.enter="modifyItemName($event, item.id)">
+              {{ item.name }}
+            </div>
+            <button @click="deleteItem(item.id)"
+                    :title="'Remove ' + item.name + ' from this list.'"
+                    class="item__icon--delete">
+              <font-awesome-icon icon="times-circle"/>
+            </button>
           </div>
-          <button @click="deleteItem(index)"
-                  :title="'Remove ' + item.name + ' from this list.'"
-                  class="item__icon--delete">
-            <font-awesome-icon icon="times-circle"/>
-          </button>
         </div>
       </div>
     </div>
-    <div v-else class="no-items">Add items to this list above.</div>
-
   </div>
+  <div v-else class="no-items">Add items to this list above.</div>
 </template>
 
 <script>
@@ -63,6 +92,9 @@ export default {
     }
   },
   methods: {
+    findItem (id) {
+      return this.list.items.find(i => i.id === id)
+    },
     updateLocalList () {
       this.list = this.$store.getters.getListFromId(this.$route.params.id)
     },
@@ -75,30 +107,40 @@ export default {
         this.updateLocalList()
       })
     },
-    modifyItemQuantity (event, index) {
+    modifyItemQuantity (event, id) {
+      const item = this.findItem(id)
       if (event.target.innerText && !isNaN(event.target.innerText)) {
-        const item = this.list.items[index]
         item.quantity = event.target.innerText
         item.updated = new Date().getTime()
         this.$store.dispatch('updateList', this.list).then(() => this.updateLocalList())
       } else {
-        event.target.innerText = this.list.items[index].quantity
+        event.target.innerText = item.quantity
       }
       event.target.blur()
     },
-    modifyItemName (event, index) {
+    modifyItemName (event, id) {
       if (event.target.innerText) {
-        const item = this.list.items[index]
+        const item = this.findItem(id)
         item.name = event.target.innerText
         item.updated = new Date().getTime()
         this.$store.dispatch('updateList', this.list).then(() => this.updateLocalList())
       }
       event.target.blur()
     },
-    deleteItem (index) {
-      this.list.items[index].deleted = new Date().getTime()
-      this.list.items.sort((a, b) => a.deleted > b.deleted ? 1 : -1)
-      this.$store.dispatch('updateList', this.list)
+    deleteItem (id) {
+      const item = this.findItem(id)
+      if (item) {
+        item.deleted = new Date().getTime()
+        this.list.items.sort((a, b) => a.deleted > b.deleted ? 1 : -1)
+        this.$store.dispatch('updateList', this.list)
+      }
+    },
+    toggleItemCheckedStatus (id) {
+      const item = this.findItem(id)
+      if (item) {
+        item.checked = !item.checked
+        this.$store.dispatch('updateList', this.list)
+      }
     }
   },
   mounted () {
@@ -129,7 +171,11 @@ export default {
 }
 
 .item {
-  @apply flex justify-start items-center bg-white rounded border border-gl-lightblue w-full h-14;
+  @apply flex justify-start items-center w-full;
+
+  &__container {
+    @apply flex justify-start items-center bg-white rounded border border-gl-lightblue h-14 flex-grow;
+  }
 
   &s {
     @apply grid w-full gap-4 mt-8;
