@@ -25,7 +25,9 @@
       <div v-for="item in list.items.filter(i => !i.deleted && !i.checked)" :key="item.id">
         <div class="item">
           <label :for="item.name" class="sr-only">{{ item.name }} Checked</label>
-          <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"/>
+          <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"
+                 class="item__checkbox"/>
+          <font-awesome-icon icon="check" class="item__checkbox__icon"/>
           <div class="item__container">
             <div contenteditable
                  inputmode="decimal"
@@ -48,11 +50,13 @@
           </div>
         </div>
       </div>
-      <h2 v-if="list.items.filter(i => !i.deleted && i.checked).length">Checked Items</h2>
-      <div v-for="item in list.items.filter(i => !i.deleted && i.checked)" :key="item.id">
+      <h2 v-if="list.items.filter(i => !i.deleted && i.checked).length" class="items__h2">Checked Items</h2>
+      <div v-for="item in list.items.filter(i => !i.deleted && i.checked)" :key="item.id" class="items__checked">
         <div class="item">
           <label :for="item.name" class="sr-only">{{ item.name }} Checked</label>
-          <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"/>
+          <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"
+                 class="item__checkbox"/>
+          <font-awesome-icon icon="check" class="item__checkbox__icon item__checkbox__icon--checked"/>
           <div class="item__container">
             <div contenteditable
                  inputmode="decimal"
@@ -179,6 +183,30 @@ export default {
 
   &s {
     @apply grid w-full gap-4 mt-8;
+
+    &__h2 {
+      @apply font-bold text-center text-lg mt-12;
+    }
+
+    &__checked {
+      @apply opacity-50;
+    }
+  }
+
+  &__checkbox {
+    @apply relative h-8 w-8 bg-white border border-gl-lightblue outline-none appearance-none rounded mr-2 cursor-pointer;
+
+    &:checked {
+      @apply bg-gl-lightblue;
+    }
+
+    &__icon {
+      @apply absolute opacity-10 ml-2 pointer-events-none text-gl-darkgray;
+
+      &--checked {
+        @apply opacity-100;
+      }
+    }
   }
 
   &__quantity, &__name {
