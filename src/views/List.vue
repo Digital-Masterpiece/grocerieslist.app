@@ -22,6 +22,10 @@
       v-if=" list.items.length !== 0
       && list.items.filter(item => item.deleted).length !== list.items.length"
       class="items">
+      <div
+        v-if="list.items.filter(i => !i.deleted && i.checked).length && list.items.filter(i => !i.deleted && !i.checked).length === 0"
+        class="all-checked">😃 You've checked off all your items, great job!
+      </div>
       <div v-for="item in list.items.filter(i => !i.deleted && !i.checked)" :key="item.id">
         <div class="item">
           <label :for="item.name" class="sr-only">{{ item.name }} Checked</label>
@@ -80,8 +84,8 @@
         </div>
       </div>
     </div>
+    <div v-if="list.items.filter(i => !i.deleted).length === 0" class="no-items">Add items to this list above.</div>
   </div>
-  <div v-else class="no-items">Add items to this list above.</div>
 </template>
 
 <script>
@@ -234,5 +238,9 @@ export default {
 
 .no-items {
   @apply font-light text-center mt-4;
+}
+
+.all-checked {
+  @apply text-center;
 }
 </style>
