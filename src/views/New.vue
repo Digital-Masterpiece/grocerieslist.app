@@ -52,14 +52,22 @@ export default {
   }
 
   &__input {
-    @apply w-56 bg-white px-3 py-2 rounded-l outline-none;
+    @apply relative w-56 bg-white px-3 py-2 rounded-l outline-none transition duration-200 ease-in-out;
+
+    &:focus {
+      @apply ring ring-opacity-50 ring-8 ring-gl-darkblue z-10;
+    }
   }
 
   &__button {
-    @apply bg-gray-100 px-3 py-2 rounded-r transition duration-200 ease-in-out border-l border-gl-lightblue;
+    @apply relative bg-gray-100 px-3 py-2 rounded-r transition duration-200 ease-in-out border-l border-gl-lightblue outline-none;
 
     &:hover, &:focus {
       @apply bg-gl-lightblue;
+    }
+
+    &:focus {
+      @apply ring ring-opacity-50 ring-8 ring-gl-darkblue z-10;
     }
   }
 }
