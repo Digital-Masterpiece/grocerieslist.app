@@ -1,17 +1,19 @@
 <template>
   <div v-if="lists.length" class="lists">
-    <router-link v-for="list in lists" :key="list.id" class="list"
-                 :to="{name: 'List', params: {id: list.id}}">
+    <div v-for="list in lists" :key="list.id" class="list__container">
       <button :title="'Share your ' + list.name + ' list.'" class="list__icon--share">
-        <font-awesome-icon icon="share-alt-square"/>
+        <font-awesome-icon icon="share-alt"/>
       </button>
-      <span>{{ list.name }}</span>
-      <button :title="'Delete your ' + list.name + ' list.'"
-              @click.prevent="deleteList(list)"
-              class="list__icon--delete">
-        <font-awesome-icon icon="times-circle"/>
-      </button>
-    </router-link>
+      <router-link class="list"
+                   :to="{name: 'List', params: {id: list.id}}">
+        <span>{{ list.name }}</span>
+        <button :title="'Delete your ' + list.name + ' list.'"
+                @click.prevent="deleteList(list)"
+                class="list__icon--delete">
+          <font-awesome-icon icon="times-circle"/>
+        </button>
+      </router-link>
+    </div>
   </div>
   <div v-else class="no-lists">
     <span>You have no lists, </span>
@@ -41,13 +43,21 @@ export default {
 .list {
   @apply flex justify-start items-center px-4 py-3 bg-white rounded border border-gl-lightblue w-full font-bold text-lg;
 
+  &__container {
+    @apply flex justify-center items-center;
+  }
+
   &s {
     @apply grid w-full gap-4;
   }
 
   &__icon {
     &--share {
-      @apply text-3xl mr-3;
+      @apply flex justify-center items-center bg-white border border-gl-lightblue rounded-full w-12 h-12 mr-4 p-4;
+
+      &:hover, &:focus {
+        @apply text-red-700;
+      }
     }
 
     &--delete {
