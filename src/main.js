@@ -5,10 +5,10 @@ import router from './router'
 import store from './store'
 import './assets/main.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlusCircle, faTimesCircle, faShareAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faPlusCircle, faShareAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faPlusCircle, faTimesCircle, faShareAlt)
+library.add(faPlusCircle, faTimesCircle, faShareAlt, faCheck)
 
 createApp(App)
   .use(store)
