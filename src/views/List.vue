@@ -162,7 +162,11 @@ export default {
   @apply flex justify-center items-center space-x-4;
 
   &__input {
-    @apply w-56 bg-white px-3 py-2 rounded border border-gl-lightblue outline-none;
+    @apply w-56 bg-white px-3 py-2 rounded border border-gl-lightblue transition duration-200 ease-in-out outline-none;
+
+    &:focus {
+      @apply border-blue-300 ring-4 ring-blue-300 ring-opacity-50 outline-none;
+    }
 
     &--number {
       @apply w-20;
@@ -172,8 +176,12 @@ export default {
   &__button {
     @apply bg-gray-100 px-3 py-2 rounded border border-gl-lightblue transition duration-200 ease-in-out;
 
-    &:hover, &:focus {
-      @apply bg-green-100;
+    &:hover {
+      @apply bg-blue-50;
+    }
+
+    &:focus {
+      @apply border-blue-300 ring-4 ring-blue-300 ring-opacity-50 outline-none;
     }
   }
 }
@@ -198,10 +206,14 @@ export default {
   }
 
   &__checkbox {
-    @apply relative h-8 w-8 bg-white border border-gl-lightblue outline-none appearance-none rounded mr-2 cursor-pointer;
+    @apply relative h-8 w-8 bg-white border border-gl-lightblue outline-none appearance-none rounded mr-2 cursor-pointer transition duration-200 ease-in-out;
 
     &:checked {
       @apply bg-gl-lightblue;
+    }
+
+    &:focus {
+      @apply border-blue-300 ring-4 ring-blue-300 ring-opacity-50 outline-none;
     }
 
     &__icon {
@@ -214,11 +226,15 @@ export default {
   }
 
   &__quantity, &__name {
-    @apply px-4 h-full;
+    @apply px-4 h-full transition duration-200 ease-in-out;
+
+    &:focus {
+      @apply border-blue-300 ring-4 ring-blue-300 ring-opacity-50 outline-none;
+    }
   }
 
   &__quantity {
-    @apply grid place-items-center w-14 text-center border-r border-gl-lightblue;
+    @apply grid place-items-center w-14 text-center border-r border-gl-lightblue rounded-l;
   }
 
   &__name {

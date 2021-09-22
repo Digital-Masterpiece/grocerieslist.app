@@ -57,7 +57,7 @@ export default {
 
   &__icon {
     &--share {
-      @apply flex justify-center items-center bg-white border border-gl-lightblue rounded-full w-12 h-12 mr-4 p-4 transition duration-200 ease-in-out text-lg;
+      @apply flex justify-center items-center bg-white border border-gl-lightblue rounded-full w-12 h-12 mr-2 p-4 transition duration-200 ease-in-out text-lg;
 
       &:hover, &:focus {
         @apply bg-blue-50 border-blue-300 ring-2 ring-blue-300 ring-opacity-50 outline-none;
