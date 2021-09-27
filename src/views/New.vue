@@ -12,6 +12,8 @@
         <button type="submit" class="new-list__button">Create</button>
       </div>
     </form>
+
+    <router-link :to="{name: 'Lists'}" class="new-list__cancel">Cancel</router-link>
   </div>
 </template>
 
@@ -69,6 +71,10 @@ export default {
     &:focus {
       @apply border-blue-300 ring-4 ring-blue-300 ring-opacity-50 z-10;
     }
+  }
+
+  &__cancel {
+    @apply mt-6 underline;
   }
 }
 </style>

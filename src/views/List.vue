@@ -159,17 +159,17 @@ export default {
 
 <style lang="scss">
 .new-item {
-  @apply flex justify-center items-center space-x-4;
+  @apply flex justify-center items-center;
 
   &__input {
-    @apply w-56 bg-white px-3 py-2 rounded border border-gl-lightblue transition duration-200 ease-in-out outline-none;
+    @apply w-48 bg-white px-3 py-2 rounded border border-gl-lightblue transition duration-200 ease-in-out outline-none;
 
     &:focus {
       @apply border-blue-300 ring-4 ring-blue-300 ring-opacity-50 outline-none;
     }
 
     &--number {
-      @apply w-20;
+      @apply w-16 mx-2;
     }
   }
 
