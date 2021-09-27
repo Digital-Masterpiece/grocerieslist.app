@@ -24,7 +24,7 @@
       class="items">
       <div
         v-if="list.items.filter(i => !i.deleted && i.checked).length && list.items.filter(i => !i.deleted && !i.checked).length === 0"
-        class="all-checked">😃 You've checked off all your items, great job!
+        class="all-checked">😃 You've checked off all your items, nice!
       </div>
       <div v-for="item in list.items.filter(i => !i.deleted && !i.checked)" :key="item.id">
         <div class="item">
