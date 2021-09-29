@@ -49,27 +49,23 @@ export default {
     @apply flex justify-center items-center;
   }
 
-  &__container {
-    @apply rounded border border-gl-gray;
-  }
-
   &__input {
-    @apply relative w-56 bg-white px-3 py-2 rounded-l outline-none transition duration-200 ease-in-out;
+    @apply relative w-56 bg-white px-3 py-2 rounded outline-none transition duration-200 ease-in-out border border-gl-gray mr-2;
+    @apply dark:border-gray-400 dark:bg-gray-800 dark:text-gray-200;
 
-    &:focus {
-      @apply border-blue-300 ring-4 ring-blue-300 ring-opacity-50 z-10;
+    &:hover, &:focus {
+      @apply ring-4 ring-gl-gray ring-opacity-50 z-10;
+      @apply dark:ring-gray-800 dark:ring-opacity-50;
     }
   }
 
   &__button {
-    @apply relative bg-gray-100 px-3 py-2 rounded-r transition duration-200 ease-in-out border-l border-gl-gray outline-none;
+    @apply relative bg-gl-lightgreen px-3 py-2 rounded transition duration-200 ease-in-out border border-gl-green outline-none text-gray-800;
+    @apply dark:bg-gl-green dark:border-gl-lightgreen dark:text-gray-200;
 
-    &:hover {
-      @apply bg-blue-50;
-    }
-
-    &:focus {
-      @apply border-blue-300 ring-4 ring-blue-300 ring-opacity-50 z-10;
+    &:hover, &:focus {
+      @apply bg-green-300 ring-4 ring-gl-lightgreen ring-opacity-50 z-10;
+      @apply dark:ring-gl-green dark:bg-green-800 dark:ring-opacity-30;
     }
   }
 

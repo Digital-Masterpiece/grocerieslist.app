@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__container">
-      <router-link :to="{name: 'Lists'}" class="header__title">GROCERIES LIST</router-link>
+      <router-link :to="{name: 'Lists'}" class="header__title">My Lists</router-link>
       <router-link :to="{name: 'New'}" class="header__link">
         <font-awesome-icon icon="plus-square" class="header__link__icon"/>
         <span>New List</span>
@@ -20,7 +20,6 @@
   }
 
   &__title {
-    font-family: 'Barlow Semi Condensed', sans-serif;
     @apply font-bold text-2xl;
   }
 

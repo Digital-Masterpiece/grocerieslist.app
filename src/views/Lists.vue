@@ -42,9 +42,11 @@ export default {
 <style lang="scss">
 .list {
   @apply flex justify-start items-center px-4 py-3 bg-white rounded border border-gl-gray w-full font-bold text-lg transition duration-200 ease-in-out;
+  @apply dark:bg-gl-darkblue dark:border-gl-deep-blue;
 
   &:hover, &:focus {
     @apply bg-blue-50 border-blue-300 ring-2 ring-blue-300 ring-opacity-50 outline-none;
+    @apply dark:bg-gl-deep-blue dark:border-gl-darkblue dark:ring-gl-darkblue;
   }
 
   &__container {
@@ -58,9 +60,11 @@ export default {
   &__icon {
     &--share {
       @apply flex justify-center items-center bg-white border border-gl-gray rounded-full w-12 h-12 mr-2 p-4 transition duration-200 ease-in-out text-lg;
+      @apply dark:bg-gl-darkblue dark:border-gl-deep-blue;
 
       &:hover, &:focus {
         @apply bg-blue-50 border-blue-300 ring-2 ring-blue-300 ring-opacity-50 outline-none;
+        @apply dark:bg-gl-deep-blue dark:border-gl-darkblue dark:ring-gl-darkblue;
       }
     }
 
