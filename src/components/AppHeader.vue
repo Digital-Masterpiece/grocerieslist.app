@@ -1,7 +1,10 @@
 <template>
   <header class="header">
     <div class="header__container">
-      <router-link :to="{name: 'Lists'}" class="header__title">My Lists</router-link>
+      <router-link :to="{name: 'Lists'}" class="header__title">
+        <img src="@/assets/logo.svg" alt="Groceries List App Blueberry Logo" class="header__title__logo"/>
+        <span>My Lists</span>
+      </router-link>
       <router-link :to="{name: 'New'}" class="header__link">
         <font-awesome-icon icon="plus-square" class="header__link__icon"/>
         <span>New List</span>
@@ -12,7 +15,7 @@
 
 <style lang="scss">
 .header {
-  @apply grid place-items-center bg-white py-6;
+  @apply grid place-items-center bg-white py-4;
   @apply dark:bg-gl-deep-blue;
 
   &__container {
@@ -20,7 +23,11 @@
   }
 
   &__title {
-    @apply font-bold text-2xl;
+    @apply flex font-bold text-2xl place-items-center;
+
+    &__logo {
+      @apply h-12 mr-1;
+    }
   }
 
   &__link {
