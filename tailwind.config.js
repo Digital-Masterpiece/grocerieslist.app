@@ -1,14 +1,18 @@
 module.exports = {
   purge: [],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
-        'gl-gray': '#D5D8E5',
+        'gl-lightblue': '#BEC4E5',
         'gl-blue': '#A3ACE0',
-        'gl-darkgray': '#2C304D',
         'gl-darkblue': '#283380',
-        'gl-lightblue': '#BEC4E5'
+        'gl-deep-blue': '#010A33',
+        'gl-muted-blue': '#434971',
+        'gl-lightgray': '#E7E9F3',
+        'gl-gray': '#BEC4E5',
+        'gl-lightgreen': '#57CF7E',
+        'gl-green': '#3B9158'
       }
     }
   },

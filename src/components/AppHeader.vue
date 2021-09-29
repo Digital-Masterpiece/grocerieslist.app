@@ -3,7 +3,7 @@
     <div class="header__container">
       <router-link :to="{name: 'Lists'}" class="header__title">GROCERIES LIST</router-link>
       <router-link :to="{name: 'New'}" class="header__link">
-        <font-awesome-icon icon="plus-circle" class="header__link__icon"/>
+        <font-awesome-icon icon="plus-square" class="header__link__icon"/>
         <span>New List</span>
       </router-link>
     </div>
@@ -12,7 +12,8 @@
 
 <style lang="scss">
 .header {
-  @apply grid place-items-center bg-gl-blue py-6;
+  @apply grid place-items-center bg-white py-6;
+  @apply dark:bg-gl-deep-blue;
 
   &__container {
     @apply flex justify-between items-center w-full max-w-lg px-6 pb-0;
@@ -24,10 +25,10 @@
   }
 
   &__link {
-    @apply flex justify-center items-center font-semibold;
+    @apply flex justify-center items-center font-bold;
 
     &__icon {
-      @apply mr-1 text-lg;
+      @apply mr-2 text-lg;
     }
   }
 }

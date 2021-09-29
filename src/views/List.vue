@@ -162,7 +162,7 @@ export default {
   @apply flex justify-center items-center;
 
   &__input {
-    @apply w-48 bg-white px-3 py-2 rounded border border-gl-lightblue transition duration-200 ease-in-out outline-none;
+    @apply w-48 bg-white px-3 py-2 rounded border border-gl-gray transition duration-200 ease-in-out outline-none;
 
     &:focus {
       @apply border-blue-300 ring-4 ring-blue-300 ring-opacity-50 outline-none;
@@ -174,7 +174,7 @@ export default {
   }
 
   &__button {
-    @apply bg-gray-100 px-3 py-2 rounded border border-gl-lightblue transition duration-200 ease-in-out;
+    @apply bg-gray-100 px-3 py-2 rounded border border-gl-gray transition duration-200 ease-in-out;
 
     &:hover {
       @apply bg-blue-50;
@@ -190,7 +190,7 @@ export default {
   @apply flex justify-start items-center w-full;
 
   &__container {
-    @apply flex justify-start items-center bg-white rounded border border-gl-lightblue h-14 flex-grow;
+    @apply flex justify-start items-center bg-white rounded border border-gl-gray h-14 flex-grow;
   }
 
   &s {
@@ -206,7 +206,7 @@ export default {
   }
 
   &__checkbox {
-    @apply relative h-8 w-8 bg-white border border-gl-lightblue outline-none appearance-none rounded mr-2 cursor-pointer transition duration-200 ease-in-out;
+    @apply relative h-8 w-8 bg-white border border-gl-gray outline-none appearance-none rounded mr-2 cursor-pointer transition duration-200 ease-in-out;
 
     &:checked {
       @apply bg-gl-lightblue;
@@ -217,7 +217,7 @@ export default {
     }
 
     &__icon {
-      @apply absolute opacity-10 ml-2 pointer-events-none text-gl-darkgray;
+      @apply absolute opacity-10 ml-2 pointer-events-none;
 
       &--checked {
         @apply opacity-100;
@@ -234,7 +234,7 @@ export default {
   }
 
   &__quantity {
-    @apply grid place-items-center w-14 text-center border-r border-gl-lightblue rounded-l;
+    @apply grid place-items-center w-14 text-center border-r border-gl-gray rounded-l;
   }
 
   &__name {

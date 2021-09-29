@@ -41,7 +41,7 @@ export default {
 
 <style lang="scss">
 .list {
-  @apply flex justify-start items-center px-4 py-3 bg-white rounded border border-gl-lightblue w-full font-bold text-lg transition duration-200 ease-in-out;
+  @apply flex justify-start items-center px-4 py-3 bg-white rounded border border-gl-gray w-full font-bold text-lg transition duration-200 ease-in-out;
 
   &:hover, &:focus {
     @apply bg-blue-50 border-blue-300 ring-2 ring-blue-300 ring-opacity-50 outline-none;
@@ -57,7 +57,7 @@ export default {
 
   &__icon {
     &--share {
-      @apply flex justify-center items-center bg-white border border-gl-lightblue rounded-full w-12 h-12 mr-2 p-4 transition duration-200 ease-in-out text-lg;
+      @apply flex justify-center items-center bg-white border border-gl-gray rounded-full w-12 h-12 mr-2 p-4 transition duration-200 ease-in-out text-lg;
 
       &:hover, &:focus {
         @apply bg-blue-50 border-blue-300 ring-2 ring-blue-300 ring-opacity-50 outline-none;
@@ -78,7 +78,7 @@ export default {
   @apply text-center;
 
   &__link {
-    @apply text-gl-darkblue underline font-medium;
+    @apply underline font-medium;
   }
 }
 </style>
