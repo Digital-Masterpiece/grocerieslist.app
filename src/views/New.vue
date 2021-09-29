@@ -51,11 +51,10 @@ export default {
 
   &__input {
     @apply relative w-56 bg-white px-3 py-2 rounded outline-none transition duration-200 ease-in-out border border-gl-gray mr-2;
-    @apply dark:border-gray-400 dark:bg-gray-800 dark:text-gray-200;
+    @apply dark:border-gl-deep-blue dark:bg-gl-deep-blue dark:bg-opacity-50 dark:text-gray-200;
 
     &:hover, &:focus {
-      @apply ring-4 ring-gl-gray ring-opacity-50 z-10;
-      @apply dark:ring-gray-800 dark:ring-opacity-50;
+      @apply ring-4 ring-gl-blueberry ring-opacity-50 z-10;
     }
   }
 

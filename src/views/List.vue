@@ -163,11 +163,10 @@ export default {
 
   &__input {
     @apply relative w-48 bg-white px-3 py-2 rounded outline-none transition duration-200 ease-in-out border border-gl-gray;
-    @apply dark:text-gl-darkblue dark:border-gl-deep-blue;
+    @apply dark:border-gl-deep-blue dark:bg-gl-deep-blue dark:bg-opacity-50 dark:text-gray-200;
 
     &:hover, &:focus {
-      @apply ring-4 ring-gl-gray ring-opacity-50 z-10;
-      @apply dark:ring-gl-deep-blue dark:ring-opacity-30;
+      @apply ring-4 ring-gl-blueberry ring-opacity-50 z-10;
     }
 
     &--number {
@@ -188,10 +187,10 @@ export default {
 
 .item {
   @apply flex justify-start items-center w-full;
-  @apply dark:text-gl-darkblue;
 
   &__container {
     @apply flex justify-start items-center bg-white rounded border border-gl-gray h-14 flex-grow;
+    @apply dark:border-gl-deep-blue dark:bg-gl-deep-blue dark:bg-opacity-25 dark:text-gray-200;
   }
 
   &s {
@@ -208,9 +207,11 @@ export default {
 
   &__checkbox {
     @apply relative h-8 w-8 bg-white border border-gl-gray outline-none appearance-none rounded mr-2 cursor-pointer transition duration-200 ease-in-out;
+    @apply dark:border-gl-deep-blue dark:bg-gl-deep-blue dark:bg-opacity-25 dark:text-gray-200;
 
     &:checked {
       @apply bg-gl-lightblue;
+      @apply dark:bg-gl-darkblue;
     }
 
     &:focus {
@@ -236,6 +237,7 @@ export default {
 
   &__quantity {
     @apply grid place-items-center w-14 text-center border-r border-gl-gray rounded-l;
+    @apply dark:border-gl-deep-blue;
   }
 
   &__name {
