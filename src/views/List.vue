@@ -138,7 +138,9 @@ export default {
     deleteItem (id) {
       const item = this.findItem(id)
       if (item) {
-        item.deleted = new Date().getTime()
+        const now = new Date().getTime()
+        item.updated = now
+        item.deleted = now
         this.list.items.sort((a, b) => a.deleted > b.deleted ? 1 : -1)
         this.$store.dispatch('updateList', this.list)
       }

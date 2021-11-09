@@ -1,7 +1,7 @@
 <template>
   <div v-if="lists.length" class="lists">
     <div v-for="list in lists" :key="list.id" class="list__container">
-      <button :title="'Share your ' + list.name + ' list.'" class="list__icon--share">
+      <button :title="'Share your ' + list.name + ' list.'" class="list__icon--share" @click="shareList(list)">
         <font-awesome-icon icon="share-alt"/>
       </button>
       <router-link class="list"
@@ -33,6 +33,15 @@ export default {
     deleteList (list) {
       if (confirm('Are you sure you want to delete your ' + list.name + ' list?')) {
         this.$store.dispatch('deleteList', list.id)
+      }
+    },
+    shareList (list) {
+      if (navigator.clipboard) {
+        try {
+          navigator.clipboard.writeText(window.location.origin + '?import=' + btoa(JSON.stringify(list)))
+        } catch (err) {
+          console.error(err)
+        }
       }
     }
   }
