@@ -7,6 +7,12 @@
           <component :is="Component" :key="$route.fullPath"/>
         </transition>
       </router-view>
+      <div class="copied">
+        <div class="copied__content">
+          <font-awesome-icon icon="clipboard-check" class="copied__icon"/>
+          <span>Copied to Clipboard</span>
+        </div>
+      </div>
     </main>
   </div>
 </template>
@@ -23,7 +29,31 @@ export default {
   },
   methods: {
     importList () {
+      const jsonString = atob(this.$route.query.import.toString())
+      const newList = JSON.parse(jsonString)
 
+      // If this list already exists we have to run a differential on the items, otherwise just add it.
+      const existingList = this.$store.state.lists.find(list => list.id === newList.id)
+      if (existingList) {
+        newList.items.forEach(newListItem => {
+          // If this item already exists on this list, update it appropriately, otherwise just add it.
+          const existingListItem = existingList.items.find(existingListItem => existingListItem.id === newListItem.id)
+          if (existingListItem) {
+            if (existingListItem.deleted || newListItem.deleted) {
+              newListItem.deleted = existingListItem.deleted ?? newListItem.deleted
+            }
+            if (existingListItem.updated >= newListItem.updated) {
+              newListItem = existingListItem
+            }
+          } else {
+            existingList.items.push(newListItem)
+          }
+        })
+
+        this.$store.dispatch('updateList', newList)
+      } else {
+        this.$store.dispatch('createList', newList)
+      }
     }
   },
   mounted () {
@@ -31,31 +61,7 @@ export default {
       this.loaded = true
 
       if (this.$route.query.import) {
-        const jsonString = atob(this.$route.query.import.toString())
-        const newList = JSON.parse(jsonString)
-
-        // If this list already exists we have to run a differential on the items, otherwise just add it.
-        const existingList = this.$store.state.lists.find(list => list.id === newList.id)
-        if (existingList) {
-          newList.items.forEach(newListItem => {
-            // If this item already exists on this list, update it appropriately, otherwise just add it.
-            const existingListItem = existingList.items.find(existingListItem => existingListItem.id === newListItem.id)
-            if (existingListItem) {
-              if (existingListItem.deleted || newListItem.deleted) {
-                newListItem.deleted = existingListItem.deleted ?? newListItem.deleted
-              }
-              if (existingListItem.updated >= newListItem.updated) {
-                newListItem = existingListItem
-              }
-            } else {
-              existingList.items.push(newListItem)
-            }
-          })
-
-          this.$store.dispatch('updateList', newList)
-        } else {
-          this.$store.dispatch('createList', newList)
-        }
+        this.importList()
       }
     })
   }
@@ -65,6 +71,19 @@ export default {
 <style lang="scss">
 .main {
   @apply p-6 w-full max-w-lg mx-auto;
+}
+
+.copied {
+  @apply fixed grid place-items-center right-0 left-0 text-center pb-6 pointer-events-none transition-all ease-in-out;
+  bottom: -4rem;
+
+  &__content {
+    @apply bg-gl-green py-2 px-3 text-sm rounded shadow text-white;
+  }
+
+  &__icon {
+    @apply mr-1;
+  }
 }
 
 .fade-enter-active,

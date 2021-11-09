@@ -38,6 +38,11 @@ export default {
     shareList (list) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(window.location.origin + '?import=' + btoa(JSON.stringify(list)))
+        const copied = document.querySelector('.copied')
+        copied.classList.add('bottom-0')
+        setTimeout(() => {
+          copied.classList.remove('bottom-0')
+        }, 1000)
       }
     }
   }
