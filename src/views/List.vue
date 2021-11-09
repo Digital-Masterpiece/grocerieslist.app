@@ -149,6 +149,7 @@ export default {
       const item = this.findItem(id)
       if (item) {
         item.checked = !item.checked
+        item.updated = new Date().getTime()
         this.$store.dispatch('updateList', this.list)
       }
     }

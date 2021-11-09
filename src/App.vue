@@ -41,6 +41,9 @@ export default {
             // If this item already exists on this list, update it appropriately, otherwise just add it.
             const existingListItem = existingList.items.find(existingListItem => existingListItem.id === newListItem.id)
             if (existingListItem) {
+              if (existingListItem.deleted || newListItem.deleted) {
+                newListItem.deleted = existingListItem.deleted ?? newListItem.deleted
+              }
               if (existingListItem.updated >= newListItem.updated) {
                 newListItem = existingListItem
               }
