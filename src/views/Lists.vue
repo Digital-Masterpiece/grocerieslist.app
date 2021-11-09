@@ -37,11 +37,7 @@ export default {
     },
     shareList (list) {
       if (navigator.clipboard) {
-        try {
-          navigator.clipboard.writeText(window.location.origin + '?import=' + btoa(JSON.stringify(list)))
-        } catch (err) {
-          console.error(err)
-        }
+        navigator.clipboard.writeText(window.location.origin + '?import=' + btoa(JSON.stringify(list)))
       }
     }
   }
