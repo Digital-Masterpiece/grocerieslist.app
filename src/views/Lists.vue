@@ -37,12 +37,22 @@ export default {
     },
     shareList (list) {
       if (navigator.clipboard) {
-        navigator.clipboard.writeText(window.location.origin + '?import=' + btoa(JSON.stringify(list)))
-        const copied = document.querySelector('.copied')
-        copied.classList.add('bottom-0')
-        setTimeout(() => {
-          copied.classList.remove('bottom-0')
-        }, 1000)
+        const target = window.location.origin + '?import=' + btoa(JSON.stringify(list))
+
+        fetch('https://api-grocerieslist-app.uc.r.appspot.com?target=' + target, {
+          method: 'POST'
+        }).then(response => response.json())
+          .then(response => {
+            if (response && response.link) {
+              navigator.clipboard.writeText('Check out my ' + list.name + ' list at ' + response.link + '.')
+              const copied = document.querySelector('.copied')
+              copied.classList.add('bottom-0')
+              setTimeout(() => {
+                copied.classList.remove('bottom-0')
+              }, 1000)
+              console.log(response.link)
+            }
+          })
       }
     }
   }

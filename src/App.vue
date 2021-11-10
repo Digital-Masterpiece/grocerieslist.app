@@ -54,6 +54,8 @@ export default {
       } else {
         this.$store.dispatch('createList', newList)
       }
+
+      this.$router.replace({ name: 'List', params: { id: newList.id } })
     }
   },
   mounted () {
