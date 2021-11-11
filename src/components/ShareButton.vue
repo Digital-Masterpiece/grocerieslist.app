@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import JSONCrush from 'jsoncrush'
 
 export default {
   props: {
@@ -27,11 +26,7 @@ export default {
       }, 1000)
     },
     async shareList (list) {
-      const jsonString = JSON.stringify(list)
-      const encodedString = encodeURIComponent(jsonString)
-      const crushedString = JSONCrush.crush(encodedString)
-      const base64String = btoa(crushedString)
-      const target = window.location.origin + '?import=' + base64String
+      const target = window.location.origin + '?import=' + btoa(JSON.stringify(list))
 
       if (target.length > 512) {
         this.copyToClipboard(target)
