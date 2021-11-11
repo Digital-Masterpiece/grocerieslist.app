@@ -30,7 +30,7 @@ export default {
   methods: {
     importList () {
       const jsonString = this.$route.query.import.toString()
-      const newList = JSON.parse(jsonString)
+      const newList = JSON.parse(atob(jsonString))
 
       // If this list already exists we have to run a differential on the items, otherwise just add it.
       const existingList = this.$store.state.lists.find(list => list.id === newList.id)

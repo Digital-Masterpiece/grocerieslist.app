@@ -17,7 +17,8 @@ export default {
   },
   methods: {
     async shareList (list) {
-      const target = encodeURIComponent(window.location.origin + '?import=' + JSON.stringify(list))
+      const target = window.location.origin + '?import=' + btoa(JSON.stringify(list))
+      console.log(target)
 
       try {
         this.updating = true
