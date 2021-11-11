@@ -32,6 +32,9 @@ export default {
         this.$store.dispatch('deleteList', list.id)
       }
     }
+  },
+  mounted () {
+    document.title = 'My Lists | Groceries List'
   }
 }
 </script>

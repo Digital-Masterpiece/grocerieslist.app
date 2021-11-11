@@ -36,6 +36,7 @@ export default {
     }
   },
   mounted () {
+    document.title = 'New List | Groceries List'
     this.$refs.newListName.focus()
   }
 }

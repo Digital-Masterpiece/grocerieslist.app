@@ -23,7 +23,7 @@
       && list.i.filter(item => item.d).length !== list.i.length"
       class="items">
       <div
-        v-if="list.i.filter(i => !i.d && i.c).length && list.i.filter(i => !i.d && !i.c).length === 0"
+        v-if="list.i.filter(i => !i.d && i.c === 0).length && list.i.filter(i => !i.d && i.c === 0).length === 0"
         class="all-checked">😃 You've checked off all your items, nice!
       </div>
       <div v-for="item in list.i.filter(i => !i.d && !i.c)" :key="item.id">
@@ -54,8 +54,9 @@
           </div>
         </div>
       </div>
-      <h2 v-if="list.i.filter(i => !i.d && i.c).length" class="items__h2">Checked Items</h2>
-      <div v-for="item in list.i.filter(i => !i.d && i.c)" :key="item.id" class="items__checked">
+
+      <h2 v-if="list.i.filter(i => !i.d && i.c === 1).length" class="items__h2">Checked Items</h2>
+      <div v-for="item in list.i.filter(i => !i.d && i.c === 1)" :key="item.id" class="items__checked">
         <div class="item">
           <label :for="item.n" class="sr-only">{{ item.n }} Checked</label>
           <input type="checkbox" :id="item.n" :checked="item.c" @input="toggleItemCheckedStatus(item.id)"
@@ -155,6 +156,7 @@ export default {
   },
   mounted () {
     this.updateLocalList()
+    document.title = this.list.n + ' List | Groceries List'
   }
 }
 </script>
