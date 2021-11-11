@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     importList () {
-      const jsonString = atob(this.$route.query.import.toString())
+      const jsonString = this.$route.query.import.toString()
       const newList = JSON.parse(jsonString)
 
       // If this list already exists we have to run a differential on the items, otherwise just add it.
