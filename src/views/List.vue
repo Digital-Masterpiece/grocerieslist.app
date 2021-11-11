@@ -1,6 +1,6 @@
 <template>
   <div v-if="list">
-    <h1>{{ list.name }}</h1>
+    <h1>{{ list.n }}</h1>
 
     <form class="new-item" @submit.prevent="addItemToList">
       <label for="name" class="sr-only">Item Name</label>
@@ -19,14 +19,14 @@
 
     <!-- Only display the list items if they are present and not all soft deleted. -->
     <div
-      v-if=" list.items.length !== 0
-      && list.items.filter(item => item.deleted).length !== list.items.length"
+      v-if=" list.i.length !== 0
+      && list.i.filter(item => item.deleted).length !== list.i.length"
       class="items">
       <div
-        v-if="list.items.filter(i => !i.deleted && i.checked).length && list.items.filter(i => !i.deleted && !i.checked).length === 0"
+        v-if="list.i.filter(i => !i.deleted && i.checked).length && list.i.filter(i => !i.deleted && !i.checked).length === 0"
         class="all-checked">😃 You've checked off all your items, nice!
       </div>
-      <div v-for="item in list.items.filter(i => !i.deleted && !i.checked)" :key="item.id">
+      <div v-for="item in list.i.filter(i => !i.deleted && !i.checked)" :key="item.id">
         <div class="item">
           <label :for="item.name" class="sr-only">{{ item.name }} Checked</label>
           <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"
@@ -54,8 +54,8 @@
           </div>
         </div>
       </div>
-      <h2 v-if="list.items.filter(i => !i.deleted && i.checked).length" class="items__h2">Checked Items</h2>
-      <div v-for="item in list.items.filter(i => !i.deleted && i.checked)" :key="item.id" class="items__checked">
+      <h2 v-if="list.i.filter(i => !i.deleted && i.checked).length" class="items__h2">Checked Items</h2>
+      <div v-for="item in list.i.filter(i => !i.deleted && i.checked)" :key="item.id" class="items__checked">
         <div class="item">
           <label :for="item.name" class="sr-only">{{ item.name }} Checked</label>
           <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"
@@ -84,7 +84,7 @@
         </div>
       </div>
     </div>
-    <div v-if="list.items.filter(i => !i.deleted).length === 0" class="no-items">Add items to this list above.</div>
+    <div v-if="list.i.filter(i => !i.deleted).length === 0" class="no-items">Add items to this list above.</div>
   </div>
 </template>
 
@@ -101,14 +101,14 @@ export default {
   },
   methods: {
     findItem (id) {
-      return this.list.items.find(i => i.id === id)
+      return this.list.i.find(i => i.id === id)
     },
     updateLocalList () {
       this.list = this.$store.getters.getListFromId(this.$route.params.id)
     },
     addItemToList () {
       const item = new Item(this.name, this.quantity)
-      this.list.items.push(item)
+      this.list.i.push(item)
       this.$store.dispatch('updateList', this.list).then(() => {
         this.name = null
         this.quantity = 1
@@ -141,7 +141,7 @@ export default {
         const now = new Date().getTime()
         item.updated = now
         item.deleted = now
-        this.list.items.sort((a, b) => a.deleted > b.deleted ? 1 : -1)
+        this.list.i.sort((a, b) => a.deleted > b.deleted ? 1 : -1)
         this.$store.dispatch('updateList', this.list)
       }
     },

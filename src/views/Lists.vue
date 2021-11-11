@@ -4,8 +4,8 @@
       <share-button :list="list"/>
       <router-link class="list"
                    :to="{name: 'List', params: {id: list.id}}">
-        <span>{{ list.name }}</span>
-        <button :title="'Delete your ' + list.name + ' list.'"
+        <span>{{ list.n }}</span>
+        <button :title="'Delete your ' + list.n + ' list.'"
                 @click.prevent="deleteList(list)"
                 class="list__icon--delete">
           <font-awesome-icon icon="times-circle"/>

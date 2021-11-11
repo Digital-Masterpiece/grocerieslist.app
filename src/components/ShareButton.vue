@@ -1,5 +1,5 @@
 <template>
-  <button :title="'Share your ' + list.name + ' list.'" class="share-list-button" @click="shareList(list)">
+  <button :title="'Share your ' + list.n + ' list.'" class="share-list-button" @click="shareList(list)">
     <font-awesome-icon v-if="updating" icon="circle-notch" class="share-list-button__icon--spinner"/>
     <font-awesome-icon v-else icon="share-alt"/>
   </button>
@@ -30,7 +30,7 @@ export default {
               if (navigator.share) {
                 navigator.share({
                   url: response.link,
-                  text: 'Check out my ' + list.name + ' list!'
+                  text: 'Check out my ' + list.n + ' list!'
                 })
               } else if (navigator.clipboard) {
                 navigator.clipboard.writeText(response.link)

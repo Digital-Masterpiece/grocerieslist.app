@@ -35,9 +35,9 @@ export default {
       // If this list already exists we have to run a differential on the items, otherwise just add it.
       const existingList = this.$store.state.lists.find(list => list.id === newList.id)
       if (existingList) {
-        newList.items.forEach(newListItem => {
+        newList.i.forEach(newListItem => {
           // If this item already exists on this list, update it appropriately, otherwise just add it.
-          const existingListItem = existingList.items.find(existingListItem => existingListItem.id === newListItem.id)
+          const existingListItem = existingList.i.find(existingListItem => existingListItem.id === newListItem.id)
           if (existingListItem) {
             if (existingListItem.deleted || newListItem.deleted) {
               newListItem.deleted = existingListItem.deleted ?? newListItem.deleted
@@ -46,7 +46,7 @@ export default {
               newListItem = existingListItem
             }
           } else {
-            existingList.items.push(newListItem)
+            existingList.i.push(newListItem)
           }
         })
 

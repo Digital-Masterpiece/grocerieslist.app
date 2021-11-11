@@ -17,7 +17,7 @@ export default createStore({
       state.lists.push(list)
     },
     updateList (state, list) {
-      list.items.sort((a, b) => a.name > b.name ? 1 : -1)
+      list.i.sort((a, b) => a.name > b.name ? 1 : -1)
       state.lists[state.lists.findIndex(existingList => existingList.id === list.id)] = list
     },
     deleteList (state, id) {
