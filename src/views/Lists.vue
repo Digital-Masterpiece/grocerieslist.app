@@ -1,7 +1,6 @@
 <template>
   <div v-if="lists.length" class="lists">
     <div v-for="list in lists" :key="list.id" class="list__container">
-      <share-button :list="list"/>
       <router-link class="list"
                    :to="{name: 'List', params: {id: list.id}}">
         <span>{{ list.n }}</span>
@@ -21,10 +20,7 @@
 </template>
 
 <script>
-import ShareButton from '@/components/ShareButton'
-
 export default {
-  components: { ShareButton },
   computed: {
     lists () {
       return this.$store.state.lists
