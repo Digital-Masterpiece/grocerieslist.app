@@ -138,9 +138,8 @@ export default {
     deleteItem (id) {
       const item = this.findItem(id)
       if (item) {
-        const now = new Date().getTime()
-        item.u = now
-        item.d = now
+        item.u = new Date().getTime()
+        item.d = 1
         this.list.i.sort((a, b) => a.d > b.d ? 1 : -1)
         this.$store.dispatch('updateList', this.list)
       }
@@ -148,7 +147,7 @@ export default {
     toggleItemCheckedStatus (id) {
       const item = this.findItem(id)
       if (item) {
-        item.c = !item.c
+        item.c = item.c === 0 ? 1 : 0
         item.u = new Date().getTime()
         this.$store.dispatch('updateList', this.list)
       }

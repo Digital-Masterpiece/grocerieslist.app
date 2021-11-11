@@ -8,10 +8,10 @@ export default class Item {
     // Quantity
     this.q = quantity
     // Checked
-    this.c = false
+    this.c = 0
     // Updated
     this.u = new Date().getTime()
     // Deleted
-    this.d = null
+    this.d = 0
   }
 }
