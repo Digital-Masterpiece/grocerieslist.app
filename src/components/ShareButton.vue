@@ -18,7 +18,6 @@ export default {
   methods: {
     async shareList (list) {
       const target = window.location.origin + '?import=' + JSON.stringify(list)
-      console.log(target)
 
       try {
         this.updating = true
