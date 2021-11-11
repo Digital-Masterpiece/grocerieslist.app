@@ -18,6 +18,14 @@ export default {
     }
   },
   methods: {
+    copyToClipboard (text) {
+      navigator.clipboard.writeText(text)
+      const copied = document.querySelector('.copied')
+      copied.classList.add('bottom-0')
+      setTimeout(() => {
+        copied.classList.remove('bottom-0')
+      }, 1000)
+    },
     async shareList (list) {
       const jsonString = JSON.stringify(list)
       const encodedString = encodeURIComponent(jsonString)
@@ -25,36 +33,35 @@ export default {
       const base64String = btoa(crushedString)
       const target = window.location.origin + '?import=' + base64String
 
-      try {
-        this.updating = true
-        await fetch('https://api-grocerieslist-app.uc.r.appspot.com?target=' + target, {
-          method: 'POST'
-        }).then(response => response.json())
-          .then(response => {
-            this.updating = false
-            if (response && response.link) {
-              if (navigator.share) {
-                navigator.share({
-                  url: response.link,
-                  text: 'Check out my ' + list.n + ' list!'
-                })
-              } else if (navigator.clipboard) {
-                navigator.clipboard.writeText(response.link)
-                const copied = document.querySelector('.copied')
-                copied.classList.add('bottom-0')
-                setTimeout(() => {
-                  copied.classList.remove('bottom-0')
-                }, 1000)
+      if (target.length > 1024) {
+        this.copyToClipboard(target)
+      } else {
+        try {
+          this.updating = true
+          await fetch('https://api-grocerieslist-app.uc.r.appspot.com?target=' + target, {
+            method: 'POST'
+          }).then(response => response.json())
+            .then(response => {
+              this.updating = false
+              if (response && response.link) {
+                if (navigator.share) {
+                  navigator.share({
+                    url: response.link,
+                    text: 'Check out my ' + list.n + ' list!'
+                  })
+                } else if (navigator.clipboard) {
+                  this.copyToClipboard(response.link)
+                } else {
+                  alert('Your device does not support the Share or Clipboard API, sorry.')
+                }
               } else {
-                alert('Your device does not support the Share or Clipboard API, sorry.')
+                alert('Failed to generate short link, please try again.')
               }
-            } else {
-              alert('Failed to generate short link, please try again.')
-            }
-          })
-      } catch (err) {
-        this.updating = false
-        alert(err)
+            })
+        } catch (err) {
+          this.updating = false
+          alert(err)
+        }
       }
     }
   }
