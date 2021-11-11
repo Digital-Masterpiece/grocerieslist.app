@@ -19,8 +19,11 @@ export default {
   },
   methods: {
     async shareList (list) {
-      const crushedString = JSONCrush.crush(JSON.stringify(list))
-      const target = window.location.origin + '?import=' + encodeURIComponent(crushedString)
+      const jsonString = JSON.stringify(list)
+      const encodedString = encodeURIComponent(jsonString)
+      const crushedString = JSONCrush.crush(encodedString)
+      const base64String = btoa(crushedString)
+      const target = window.location.origin + '?import=' + base64String
 
       try {
         this.updating = true

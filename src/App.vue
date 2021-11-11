@@ -30,8 +30,10 @@ export default {
   },
   methods: {
     importList () {
-      const jsonString = JSONCrush.uncrush(this.$route.query.import.toString())
-      const newList = JSON.parse(jsonString)
+      const base64DecodedString = atob(this.$route.query.import.toString())
+      const uncrushedString = JSONCrush.uncrush(base64DecodedString)
+      const decodedString = decodeURIComponent(uncrushedString)
+      const newList = JSON.parse(decodedString)
 
       // If this list already exists we have to run a differential on the items, otherwise just add it.
       const existingList = this.$store.state.lists.find(list => list.id === newList.id)
@@ -41,6 +43,7 @@ export default {
           const existingListItem = existingList.i.find(existingListItem => existingListItem.id === newListItem.id)
           if (existingListItem) {
             if (existingListItem.d || newListItem.d) {
+              // TODO: Actually delete the item from the array here.
               newListItem.d = existingListItem.d ?? newListItem.d
             }
             if (existingListItem.u >= newListItem.u) {
