@@ -33,7 +33,7 @@ export default {
       const base64String = btoa(crushedString)
       const target = window.location.origin + '?import=' + base64String
 
-      if (target.length > 1024) {
+      if (target.length > 512) {
         this.copyToClipboard(target)
       } else {
         try {
