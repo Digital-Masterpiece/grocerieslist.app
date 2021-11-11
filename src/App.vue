@@ -10,7 +10,7 @@
       <div class="copied">
         <div class="copied__content">
           <font-awesome-icon icon="clipboard-check" class="copied__icon"/>
-          <span>Copied to Clipboard</span>
+          <span>Link Copied to Clipboard</span>
         </div>
       </div>
     </main>
@@ -80,11 +80,11 @@ export default {
   bottom: -4rem;
 
   &__content {
-    @apply bg-gl-green py-2 px-3 text-sm rounded shadow text-white;
+    @apply bg-gl-green py-2 px-3 text-sm rounded shadow text-white font-medium;
   }
 
   &__icon {
-    @apply mr-1;
+    @apply text-base mr-2;
   }
 }
 
