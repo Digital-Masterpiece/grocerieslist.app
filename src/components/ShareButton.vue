@@ -28,7 +28,7 @@ export default {
     async shareList (list) {
       const target = window.location.origin + '?import=' + btoa(JSON.stringify(list))
 
-      if (target.length > 512) {
+      if (target.length > 1024) {
         this.copyToClipboard(target)
       } else {
         try {
