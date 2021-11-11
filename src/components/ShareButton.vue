@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import JSONCrush from 'jsoncrush'
+
 export default {
   props: {
     list: Object
@@ -17,8 +19,8 @@ export default {
   },
   methods: {
     async shareList (list) {
-      const target = window.location.origin + '?import=' + btoa(JSON.stringify(list))
-      console.log(target)
+      const crushedString = JSONCrush.crush(JSON.stringify(list))
+      const target = window.location.origin + '?import=' + encodeURIComponent(crushedString)
 
       try {
         this.updating = true

@@ -19,6 +19,7 @@
 
 <script>
 import AppHeader from '@/components/AppHeader'
+import JSONCrush from 'jsoncrush'
 
 export default {
   components: { AppHeader },
@@ -29,8 +30,8 @@ export default {
   },
   methods: {
     importList () {
-      const jsonString = this.$route.query.import.toString()
-      const newList = JSON.parse(atob(jsonString))
+      const jsonString = JSONCrush.uncrush(this.$route.query.import.toString())
+      const newList = JSON.parse(jsonString)
 
       // If this list already exists we have to run a differential on the items, otherwise just add it.
       const existingList = this.$store.state.lists.find(list => list.id === newList.id)
