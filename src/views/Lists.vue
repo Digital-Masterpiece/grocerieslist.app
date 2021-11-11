@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     deleteList (list) {
-      if (confirm('Are you sure you want to delete your ' + list.name + ' list?')) {
+      if (confirm('Are you sure you want to delete your ' + list.n + ' list?')) {
         this.$store.dispatch('deleteList', list.id)
       }
     }

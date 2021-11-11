@@ -20,16 +20,16 @@
     <!-- Only display the list items if they are present and not all soft deleted. -->
     <div
       v-if=" list.i.length !== 0
-      && list.i.filter(item => item.deleted).length !== list.i.length"
+      && list.i.filter(item => item.d).length !== list.i.length"
       class="items">
       <div
-        v-if="list.i.filter(i => !i.deleted && i.checked).length && list.i.filter(i => !i.deleted && !i.checked).length === 0"
+        v-if="list.i.filter(i => !i.d && i.c).length && list.i.filter(i => !i.d && !i.c).length === 0"
         class="all-checked">😃 You've checked off all your items, nice!
       </div>
-      <div v-for="item in list.i.filter(i => !i.deleted && !i.checked)" :key="item.id">
+      <div v-for="item in list.i.filter(i => !i.d && !i.c)" :key="item.id">
         <div class="item">
-          <label :for="item.name" class="sr-only">{{ item.name }} Checked</label>
-          <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"
+          <label :for="item.n" class="sr-only">{{ item.n }} Checked</label>
+          <input type="checkbox" :id="item.n" :checked="item.c" @input="toggleItemCheckedStatus(item.id)"
                  class="item__checkbox"/>
           <font-awesome-icon icon="check" class="item__checkbox__icon"/>
           <div class="item__container">
@@ -38,27 +38,27 @@
                  class="item__quantity"
                  @blur="modifyItemQuantity($event, item.id)"
                  @keypress.enter="modifyItemQuantity($event, item.id)">
-              {{ item.quantity }}
+              {{ item.q }}
             </div>
             <div contenteditable
                  class="item__name"
                  @blur="modifyItemName($event, item.id)"
                  @keypress.enter="modifyItemName($event, item.id)">
-              {{ item.name }}
+              {{ item.n }}
             </div>
             <button @click="deleteItem(item.id)"
-                    :title="'Remove ' + item.name + ' from this list.'"
+                    :title="'Remove ' + item.n + ' from this list.'"
                     class="item__icon--delete">
               <font-awesome-icon icon="times-circle"/>
             </button>
           </div>
         </div>
       </div>
-      <h2 v-if="list.i.filter(i => !i.deleted && i.checked).length" class="items__h2">Checked Items</h2>
-      <div v-for="item in list.i.filter(i => !i.deleted && i.checked)" :key="item.id" class="items__checked">
+      <h2 v-if="list.i.filter(i => !i.d && i.c).length" class="items__h2">Checked Items</h2>
+      <div v-for="item in list.i.filter(i => !i.d && i.c)" :key="item.id" class="items__checked">
         <div class="item">
-          <label :for="item.name" class="sr-only">{{ item.name }} Checked</label>
-          <input type="checkbox" :id="item.name" :checked="item.checked" @input="toggleItemCheckedStatus(item.id)"
+          <label :for="item.n" class="sr-only">{{ item.n }} Checked</label>
+          <input type="checkbox" :id="item.n" :checked="item.c" @input="toggleItemCheckedStatus(item.id)"
                  class="item__checkbox"/>
           <font-awesome-icon icon="check" class="item__checkbox__icon item__checkbox__icon--checked"/>
           <div class="item__container">
@@ -67,16 +67,16 @@
                  class="item__quantity"
                  @blur="modifyItemQuantity($event, item.id)"
                  @keypress.enter="modifyItemQuantity($event, item.id)">
-              {{ item.quantity }}
+              {{ item.q }}
             </div>
             <div contenteditable
                  class="item__name"
                  @blur="modifyItemName($event, item.id)"
                  @keypress.enter="modifyItemName($event, item.id)">
-              {{ item.name }}
+              {{ item.n }}
             </div>
             <button @click="deleteItem(item.id)"
-                    :title="'Remove ' + item.name + ' from this list.'"
+                    :title="'Remove ' + item.n + ' from this list.'"
                     class="item__icon--delete">
               <font-awesome-icon icon="times-circle"/>
             </button>
@@ -84,7 +84,7 @@
         </div>
       </div>
     </div>
-    <div v-if="list.i.filter(i => !i.deleted).length === 0" class="no-items">Add items to this list above.</div>
+    <div v-if="list.i.filter(i => !i.d).length === 0" class="no-items">Add items to this list above.</div>
   </div>
 </template>
 
@@ -118,19 +118,19 @@ export default {
     modifyItemQuantity (event, id) {
       const item = this.findItem(id)
       if (event.target.innerText && !isNaN(event.target.innerText)) {
-        item.quantity = event.target.innerText
-        item.updated = new Date().getTime()
+        item.q = event.target.innerText
+        item.u = new Date().getTime()
         this.$store.dispatch('updateList', this.list).then(() => this.updateLocalList())
       } else {
-        event.target.innerText = item.quantity
+        event.target.innerText = item.q
       }
       event.target.blur()
     },
     modifyItemName (event, id) {
       if (event.target.innerText) {
         const item = this.findItem(id)
-        item.name = event.target.innerText
-        item.updated = new Date().getTime()
+        item.n = event.target.innerText
+        item.u = new Date().getTime()
         this.$store.dispatch('updateList', this.list).then(() => this.updateLocalList())
       }
       event.target.blur()
@@ -139,17 +139,17 @@ export default {
       const item = this.findItem(id)
       if (item) {
         const now = new Date().getTime()
-        item.updated = now
-        item.deleted = now
-        this.list.i.sort((a, b) => a.deleted > b.deleted ? 1 : -1)
+        item.u = now
+        item.d = now
+        this.list.i.sort((a, b) => a.d > b.d ? 1 : -1)
         this.$store.dispatch('updateList', this.list)
       }
     },
     toggleItemCheckedStatus (id) {
       const item = this.findItem(id)
       if (item) {
-        item.checked = !item.checked
-        item.updated = new Date().getTime()
+        item.c = !item.c
+        item.u = new Date().getTime()
         this.$store.dispatch('updateList', this.list)
       }
     }
