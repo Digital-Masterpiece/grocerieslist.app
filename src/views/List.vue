@@ -6,7 +6,7 @@
       <label for="name" class="sr-only">Item Name</label>
       <input v-model="name" required
              class="new-item__input"
-             type="text" id="name" placeholder="Item Name"/>
+             type="text" id="name" placeholder="Item Name" autofocus/>
 
       <label for="quantity" class="sr-only">Quantity</label>
       <input v-model="quantity" required
