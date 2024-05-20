@@ -6,6 +6,7 @@
       <label for="name" class="sr-only">Item Name</label>
       <input v-model="name" required
              class="new-item__input"
+             ref="item_name"
              type="text" id="name" placeholder="Item Name" autofocus/>
 
       <label for="quantity" class="sr-only">Quantity</label>
@@ -114,6 +115,7 @@ export default {
         this.quantity = 1
         this.updateLocalList()
       })
+      this.$refs.item_name.focus()
     },
     modifyItemQuantity (event, id) {
       const item = this.findItem(id)
