@@ -15,6 +15,16 @@ npm run serve
 npm run build
 ```
 
+### Deploying via Firebase to a Preview Channel
+```
+firebase hosting:channel:deploy preview --project grocerieslist-app
+```
+
+### Deploying via Firebase to Production
+```
+firebase deploy --project grocerieslist-app
+```
+
 ### Run your unit tests
 ```
 npm run test:unit
