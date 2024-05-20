@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: '18'
       - name: Set Legacy SSL
-        run: NODE_OPTIONS="--openssl-legacy-provider"
+        run: export NODE_OPTIONS=--openssl-legacy-provider
       - name: Install NPM Dependencies
         run: npm install
       - name: Build Application
