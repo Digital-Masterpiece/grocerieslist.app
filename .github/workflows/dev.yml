@@ -11,7 +11,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@master
         with:
-          node-version: '16'
+          node-version: '18'
       - name: Set Legacy SSL
         run: NODE_OPTIONS="--openssl-legacy-provider"
       - name: Install NPM Dependencies
